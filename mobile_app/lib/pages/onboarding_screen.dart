@@ -28,7 +28,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     ),
     _OnboardingSlide(
       illustration: 'assets/illustrations/onboarding_pickup.png',
-      title: 'Every Pickup Counts.',
+      title: 'We collect it\nfrom your door.',
       tagline: '(Emotional trigger, connects daily action to global change)',
     ),
     _OnboardingSlide(
