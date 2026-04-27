@@ -1,8 +1,8 @@
-import 'package:crrfapp/core/constants/app_constants.dart';
-import 'package:crrfapp/pages/%20role_selection_screen.dart';
-import 'package:crrfapp/pages/onboarding_screen.dart';
-import 'package:crrfapp/pages/register_screen.dart';
-import 'package:crrfapp/pages/splash_screen.dart';
+// import 'package:crrfapp/core/constants/app_constants.dart';
+// import 'package:crrfapp/pages/onboarding_screen.dart';
+// import 'package:crrfapp/pages/register_screen.dart';
+// import 'package:crrfapp/pages/splash_screen.dart';
+import 'package:crrfapp/pages/role_selection_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -19,8 +19,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'CRRF Mobile App',
       // home: const SplashScreen(),
-      home: const OnboardingScreen(),
-      // home: const RoleSelectionScreen(),
+      // home: const OnboardingScreen(),
+      home: const RoleSelectionScreen(),
       // home: const RegisterScreen(role: UserRole.farmer),
     );
   }
