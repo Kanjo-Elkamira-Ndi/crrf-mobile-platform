@@ -29,12 +29,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     _OnboardingSlide(
       illustration: 'assets/illustrations/onboarding_pickup.png',
       title: 'We collect it\nfrom your door.',
-      tagline: '(Emotional trigger, connects daily action to global change)',
+      tagline:
+          'Schedule a free pickup directly from the app. \n Our drivers come to you — no more burning waste or illegal dumping.',
     ),
     _OnboardingSlide(
-      illustration: 'assets/illustrations/onboarding_credits.png',
+      illustration: 'assets/illustrations/onboarding_credits.jpg',
       title: 'Your credits grow with every pickup.',
-      tagline: '(Plastic earns 10 credits/kg — organic earns 5 credits/kg)',
+      tagline: '(Plastic earns 10 credits/kg while organic earns 5 credits/kg)',
     ),
     _OnboardingSlide(
       illustration: 'assets/illustrations/onboarding_farmers.png',
