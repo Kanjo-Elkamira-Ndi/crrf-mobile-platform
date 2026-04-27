@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
-import '../../core/theme/app_text_styles.dart';
+// import '../../core/theme/app_text_styles.dart';
 import '../../core/constants/app_constants.dart';
-import '../widgets/common_widgets.dart';
+// import '../widgets/common_widgets.dart';
 
 /// S-02 — Onboarding Carousel
 ///
@@ -22,40 +22,26 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   static const List<_OnboardingSlide> _slides = [
     _OnboardingSlide(
-      icon: Icons.home_rounded,
-      iconColor: AppColors.forestGreen,
-      iconBg: AppColors.greenLighter,
-      title: 'Sort your waste,\nearn rewards',
-      body:
-          'Separate your plastic and organic waste at home. Every kilogram you sort earns you CRF Credits — real value from what you throw away.',
-      accentColor: AppColors.forestGreen,
+      illustration: 'assets/illustrations/onboarding_sort.jpg',
+      title: 'Sort your waste, earn rewards.',
+      tagline: '(Separate plastic & organic — every kg earns CRF Credits)',
     ),
     _OnboardingSlide(
-      icon: Icons.local_shipping_rounded,
-      iconColor: AppColors.earthBrown,
-      iconBg: AppColors.brownLighter,
-      title: 'We collect it\nfrom your door',
-      body:
-          'Schedule a free pickup directly from the app. Our drivers come to you — no more burning waste or illegal dumping.',
-      accentColor: AppColors.earthBrown,
+      illustration: 'assets/illustrations/onboarding_pickup.png',
+      title: 'We collect it\nfrom your door.',
+      tagline:
+          'Schedule a free pickup directly from the app. \n Our drivers come to you — no more burning waste or illegal dumping.',
     ),
     _OnboardingSlide(
-      icon: Icons.account_balance_wallet_rounded,
-      iconColor: AppColors.creditGold,
-      iconBg: AppColors.goldLighter,
-      title: 'Your credits\ngrow with every pickup',
-      body:
-          'Plastic earns 10 credits/kg. Organic earns 5 credits/kg. Watch your wallet grow with every confirmed collection.',
-      accentColor: AppColors.creditGold,
+      illustration: 'assets/illustrations/onboarding_credits.jpg',
+      title: 'Your credits grow with every pickup.',
+      tagline: '(Plastic earns 10 credits/kg while organic earns 5 credits/kg)',
     ),
     _OnboardingSlide(
-      icon: Icons.agriculture_rounded,
-      iconColor: AppColors.forestGreen,
-      iconBg: AppColors.greenLighter,
-      title: 'Farmers grow\nbetter crops',
-      body:
-          'Farmers use your waste-turned-manure to improve their yields. Your household connects directly to Cameroon\'s food supply chain.',
-      accentColor: AppColors.greenMid,
+      illustration: 'assets/illustrations/onboarding_farmers.png',
+      title: 'Farmers grow better crops.',
+      tagline:
+          '(Your waste connects directly to Cameroon\'s food supply chain)',
     ),
   ];
 
@@ -88,27 +74,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     final isLast = _currentPage == _slides.length - 1;
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           children: [
-            // ── Skip button ──────────────────────────────────
-            Align(
-              alignment: Alignment.centerRight,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 8, right: 16),
-                child: TextButton(
-                  onPressed: _skip,
-                  child: Text(
-                    'Skip',
-                    style: AppTextStyles.buttonSmall.copyWith(
-                      color: AppColors.textSecondary,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-
             // ── Slides ──────────────────────────────────────
             Expanded(
               child: PageView.builder(
@@ -122,7 +91,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
             // ── Dots + CTA ───────────────────────────────────
             Padding(
-              padding: const EdgeInsets.fromLTRB(24, 16, 24, 32),
+              padding: const EdgeInsets.fromLTRB(24, 0, 24, 40),
               child: Column(
                 children: [
                   // Page dots
@@ -147,27 +116,59 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     }),
                   ),
 
-                  const SizedBox(height: 28),
+                  const SizedBox(height: 24),
 
-                  // CTA button
-                  CrrfPrimaryButton(
-                    label: isLast ? 'Get Started' : 'Next',
-                    onPressed: _next,
-                    leadingIcon: isLast ? Icons.arrow_forward_rounded : null,
-                  ),
-
-                  if (!isLast) ...[
-                    const SizedBox(height: 12),
-                    TextButton(
-                      onPressed: _skip,
+                  // Next / Get Started button
+                  SizedBox(
+                    width: double.infinity,
+                    height: 52,
+                    child: ElevatedButton(
+                      onPressed: _next,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.forestGreen,
+                        foregroundColor: Colors.white,
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
                       child: Text(
-                        'Already have an account? Log in',
-                        style: AppTextStyles.buttonSmall.copyWith(
-                          color: AppColors.textSecondary,
+                        isLast ? 'Get Started' : 'Next',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
-                  ],
+                  ),
+
+                  const SizedBox(height: 12),
+
+                  // Skip / Login button
+                  SizedBox(
+                    width: double.infinity,
+                    height: 52,
+                    child: OutlinedButton(
+                      onPressed: _skip,
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppColors.forestGreen,
+                        side: BorderSide(
+                          color: AppColors.forestGreen,
+                          width: 1.5,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
+                      child: Text(
+                        isLast ? 'Already have an account? Log in' : 'Skip',
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -180,20 +181,14 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
 // ─────────────────────────────────────────────────────────────
 class _OnboardingSlide {
-  final IconData icon;
-  final Color iconColor;
-  final Color iconBg;
+  final String illustration; // asset path
   final String title;
-  final String body;
-  final Color accentColor;
+  final String tagline;
 
   const _OnboardingSlide({
-    required this.icon,
-    required this.iconColor,
-    required this.iconBg,
+    required this.illustration,
     required this.title,
-    required this.body,
-    required this.accentColor,
+    required this.tagline,
   });
 }
 
@@ -204,41 +199,57 @@ class _OnboardingSlideWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 32),
+      padding: const EdgeInsets.symmetric(horizontal: 28),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // Illustration placeholder
-          Container(
-            width: 200,
-            height: 200,
-            decoration: BoxDecoration(
-              color: slide.iconBg,
-              shape: BoxShape.circle,
+          // ── Illustration ─────────────────────────────────
+          SizedBox(
+            height: 280,
+            child: Image.asset(
+              slide.illustration,
+              fit: BoxFit.contain,
+              // Fallback while illustrations aren't wired up:
+              errorBuilder: (_, __, ___) => Container(
+                height: 280,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF2F9EE),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: const Icon(
+                  Icons.image_outlined,
+                  size: 64,
+                  color: Color(0xFFB0CCA8),
+                ),
+              ),
             ),
-            child: Icon(slide.icon, size: 88, color: slide.iconColor),
           ),
 
-          const SizedBox(height: 40),
+          const SizedBox(height: 36),
 
-          // Title
+          // ── Title ────────────────────────────────────────
           Text(
             slide.title,
-            style: AppTextStyles.h1.copyWith(
-              height: 1.25,
-              color: AppColors.textPrimary,
+            style: const TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.w700,
+              color: Color(0xFF1A1A1A),
+              height: 1.3,
             ),
             textAlign: TextAlign.center,
           ),
 
-          const SizedBox(height: 16),
+          const SizedBox(height: 12),
 
-          // Body
+          // ── Tagline ──────────────────────────────────────
           Text(
-            slide.body,
-            style: AppTextStyles.body.copyWith(
-              color: AppColors.textSecondary,
-              height: 1.7,
+            slide.tagline,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+              color: Color(0xFF888888),
+              height: 1.6,
             ),
             textAlign: TextAlign.center,
           ),
