@@ -26,6 +26,16 @@ class CrrfPrimaryButton extends StatelessWidget {
       width: double.infinity,
       height: 54,
       child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.forestGreen,
+          foregroundColor: AppColors.white,
+          disabledBackgroundColor: AppColors.forestGreen.withValues(alpha: 0.6),
+          disabledForegroundColor: AppColors.white.withValues(alpha: 0.8),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(AppConstants.radiusM),
+          ),
+          elevation: 2,
+        ),
         onPressed: isLoading ? null : onPressed,
         child: isLoading
             ? const SizedBox(
@@ -144,6 +154,29 @@ class CrrfTextField extends StatelessWidget {
         hintText: hint,
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
+        filled: true,
+        fillColor: AppColors.white,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppConstants.radiusM),
+          borderSide: const BorderSide(color: AppColors.borderGreen, width: 1),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppConstants.radiusM),
+          borderSide: const BorderSide(color: AppColors.forestGreen, width: 1.5),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppConstants.radiusM),
+          borderSide: const BorderSide(color: AppColors.errorRed, width: 1),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppConstants.radiusM),
+          borderSide: const BorderSide(color: AppColors.errorRed, width: 1.5),
+        ),
+        disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(AppConstants.radiusM),
+          borderSide: BorderSide(color: AppColors.borderLight.withValues(alpha: 0.5), width: 1),
+        ),
       ),
     );
   }
