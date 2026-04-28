@@ -62,7 +62,7 @@ flutter:
     - assets/illustrations/onboarding_sort.jpg
     - assets/illustrations/onboarding_pickup.png
     - assets/illustrations/onboarding_credits.jpg
-    # - assets/illustrations/onboarding_farmers.png
+    - assets/illustrations/onboarding_farmers.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
