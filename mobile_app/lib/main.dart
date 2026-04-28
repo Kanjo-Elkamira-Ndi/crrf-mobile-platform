@@ -4,8 +4,9 @@
 // import 'package:crrfapp/pages/register_screen.dart';
 // import 'package:crrfapp/pages/splash_screen.dart';
 // import 'package:crrfapp/pages/role_selection_screen.dart';
-import 'package:crrfapp/pages/otp_verification_screen.dart';
-import 'package:crrfapp/core/constants/app_constants.dart';
+// import 'package:crrfapp/pages/otp_verification_screen.dart';
+import 'package:crrfapp/pages/login_screen.dart';
+// import 'package:crrfapp/core/constants/app_constants.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -25,10 +26,11 @@ class MyApp extends StatelessWidget {
       // home: const OnboardingScreen(),
       // home: const RoleSelectionScreen(),
       // home: const RegisterScreen(role: UserRole.farmer),
-      home: const OtpVerificationScreen(
-        phone: '+2348140123456',
-        role: UserRole.farmer,
-      ),
+      // home: const OtpVerificationScreen(
+      //   phone: '+2348140123456',
+      //   role: UserRole.farmer,
+      // ),
+      home: const LoginScreen(),
     );
   }
 }
