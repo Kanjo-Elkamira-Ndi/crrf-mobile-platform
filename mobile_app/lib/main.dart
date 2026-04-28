@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       // home: const SplashScreen(),
       // home: const OnboardingScreen(),
       // home: const RoleSelectionScreen(),
-      home: const RegisterScreen(role: UserRole.household),
+      home: const RegisterScreen(role: UserRole.farmer),
     );
   }
 }
