@@ -156,14 +156,20 @@ class CrrfTextField extends StatelessWidget {
         suffixIcon: suffixIcon,
         filled: true,
         fillColor: AppColors.white,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 16,
+        ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppConstants.radiusM),
           borderSide: const BorderSide(color: AppColors.borderGreen, width: 1),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppConstants.radiusM),
-          borderSide: const BorderSide(color: AppColors.forestGreen, width: 1.5),
+          borderSide: const BorderSide(
+            color: AppColors.forestGreen,
+            width: 1.5,
+          ),
         ),
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppConstants.radiusM),
@@ -175,7 +181,10 @@ class CrrfTextField extends StatelessWidget {
         ),
         disabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(AppConstants.radiusM),
-          borderSide: BorderSide(color: AppColors.borderLight.withValues(alpha: 0.5), width: 1),
+          borderSide: BorderSide(
+            color: AppColors.borderLight.withValues(alpha: 0.5),
+            width: 1,
+          ),
         ),
       ),
     );
@@ -555,6 +564,289 @@ class CalloutCard extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+// ═════════════════════════════════════════════════════════════
+//  NAVIGATION
+// ═════════════════════════════════════════════════════════════
+
+/// The five nav destinations. The center [pickup] item renders
+/// as a raised FAB-style button rather than a normal tab.
+enum CrrfNavTab { home, schedule, pickup, history, profile }
+
+// ─────────────────────────────────────────────────────────────
+/// Persistent bottom navigation bar — matches the ZyroBin design:
+/// Home | Schedule | [Pickup FAB] | History | Profile
+///
+/// Usage — wrap any authenticated screen with [CrrfScaffold]
+/// instead of plain [Scaffold]. See [CrrfScaffold] below.
+// ─────────────────────────────────────────────────────────────
+class CrrfBottomNavBar extends StatelessWidget {
+  final CrrfNavTab current;
+  final ValueChanged<CrrfNavTab> onTap;
+
+  const CrrfBottomNavBar({
+    super.key,
+    required this.current,
+    required this.onTap,
+  });
+
+  static const _kBarHeight = 68.0;
+  static const _kFabSize = 58.0;
+  static const _kFabElevation = 6.0;
+
+  @override
+  Widget build(BuildContext context) {
+    final bottomPadding = MediaQuery.of(context).padding.bottom;
+
+    return SizedBox(
+      height: _kBarHeight + bottomPadding,
+      child: Stack(
+        clipBehavior: Clip.none,
+        alignment: Alignment.bottomCenter,
+        children: [
+          // ── Bar background ─────────────────────────────────
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              height: _kBarHeight + bottomPadding,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(20),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.08),
+                    blurRadius: 16,
+                    offset: const Offset(0, -4),
+                  ),
+                ],
+              ),
+              // Row of 4 items (the center slot is an invisible spacer)
+              child: Padding(
+                padding: EdgeInsets.only(bottom: bottomPadding),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _NavItem(
+                      icon: Icons.home_rounded,
+                      label: 'Home',
+                      tab: CrrfNavTab.home,
+                      current: current,
+                      onTap: onTap,
+                    ),
+                    _NavItem(
+                      icon: Icons.calendar_month_rounded,
+                      label: 'Schedule',
+                      tab: CrrfNavTab.schedule,
+                      current: current,
+                      onTap: onTap,
+                    ),
+
+                    // Centre spacer — the FAB floats above this gap
+                    const SizedBox(width: _kFabSize + 8),
+
+                    _NavItem(
+                      icon: Icons.history_rounded,
+                      label: 'History',
+                      tab: CrrfNavTab.history,
+                      current: current,
+                      onTap: onTap,
+                    ),
+                    _NavItem(
+                      icon: Icons.person_outline_rounded,
+                      label: 'Profile',
+                      tab: CrrfNavTab.profile,
+                      current: current,
+                      onTap: onTap,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+          // ── Centre raised FAB ───────────────────────────────
+          Positioned(
+            // Lifts the FAB so its centre sits at the bar's top edge
+            top: -(_kFabSize / 2) + 4,
+            child: GestureDetector(
+              onTap: () => onTap(CrrfNavTab.pickup),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                width: _kFabSize,
+                height: _kFabSize,
+                decoration: BoxDecoration(
+                  color: AppColors.forestGreen,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.forestGreen.withOpacity(0.45),
+                      blurRadius: 14,
+                      spreadRadius: 1,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Center(
+                  child: Icon(
+                    // Location-pin style icon matching the reference image
+                    Icons.location_on_rounded,
+                    color: Colors.white,
+                    size: current == CrrfNavTab.pickup ? 30 : 26,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ─── Single nav item ──────────────────────────────────────────
+class _NavItem extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final CrrfNavTab tab;
+  final CrrfNavTab current;
+  final ValueChanged<CrrfNavTab> onTap;
+
+  const _NavItem({
+    required this.icon,
+    required this.label,
+    required this.tab,
+    required this.current,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isActive = tab == current;
+
+    return GestureDetector(
+      onTap: () => onTap(tab),
+      behavior: HitTestBehavior.opaque,
+      child: SizedBox(
+        width: 64,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 180),
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: isActive
+                    ? AppColors.forestGreen.withOpacity(0.10)
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(
+                icon,
+                size: 22,
+                color: isActive
+                    ? AppColors.forestGreen
+                    : const Color(0xFFAAAAAA),
+              ),
+            ),
+            const SizedBox(height: 2),
+            AnimatedDefaultTextStyle(
+              duration: const Duration(milliseconds: 180),
+              style: TextStyle(
+                fontSize: 11,
+                fontWeight: isActive ? FontWeight.w700 : FontWeight.w400,
+                color: isActive
+                    ? AppColors.forestGreen
+                    : const Color(0xFFAAAAAA),
+              ),
+              child: Text(label),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+/// Drop-in replacement for [Scaffold] that wires up the
+/// persistent [CrrfBottomNavBar] automatically.
+///
+/// Example:
+/// ```dart
+/// class HomeScreen extends StatelessWidget {
+///   @override
+///   Widget build(BuildContext context) {
+///     return CrrfScaffold(
+///       currentTab: CrrfNavTab.home,
+///       body: YourHomeBody(),
+///     );
+///   }
+/// }
+/// ```
+///
+/// Navigation is handled via [Navigator.pushReplacementNamed] so
+/// that the back-stack stays clean. Adjust [_routeFor] to match
+/// your actual named routes.
+// ─────────────────────────────────────────────────────────────
+class CrrfScaffold extends StatelessWidget {
+  final CrrfNavTab currentTab;
+  final Widget body;
+
+  /// Optional: pass a custom [AppBar]. Most inner screens won't need one
+  /// since each screen manages its own header area.
+  final PreferredSizeWidget? appBar;
+
+  /// Optional: extra widget above the nav bar (e.g. a bottom sheet handle).
+  final Widget? persistentFooter;
+
+  const CrrfScaffold({
+    super.key,
+    required this.currentTab,
+    required this.body,
+    this.appBar,
+    this.persistentFooter,
+  });
+
+  static String _routeFor(CrrfNavTab tab) {
+    switch (tab) {
+      case CrrfNavTab.home:
+        return AppRoutes.householdHome; // adjust to your route names
+      case CrrfNavTab.schedule:
+        return AppRoutes.schedulePickup;
+      case CrrfNavTab.pickup:
+        return AppRoutes.schedulePickup; // opens schedule as the pickup flow
+      case CrrfNavTab.history:
+        return AppRoutes.pickupHistory;
+      case CrrfNavTab.profile:
+        return AppRoutes.profile;
+    }
+  }
+
+  void _handleTap(BuildContext context, CrrfNavTab tab) {
+    if (tab == currentTab) return; // already here — no-op
+    Navigator.of(context).pushReplacementNamed(_routeFor(tab));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFFF5F7F5),
+      appBar: appBar,
+      // Prevent the body from going behind the nav bar
+      body: body,
+      // We build the nav bar ourselves via bottomNavigationBar so Flutter
+      // automatically reserves space and handles safe-area insets.
+      bottomNavigationBar: CrrfBottomNavBar(
+        current: currentTab,
+        onTap: (tab) => _handleTap(context, tab),
       ),
     );
   }
