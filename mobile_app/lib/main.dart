@@ -9,7 +9,11 @@
 // import 'package:crrfapp/pages/forgot_password_screen.dart';
 // import 'package:crrfapp/pages/notifications_screen.dart';
 // import 'package:crrfapp/pages/h01_dashboard_screen.dart';
-import 'package:crrfapp/pages/h02_schedule_pickup_screen.dart';
+// import 'package:crrfapp/pages/h02_schedule_pickup_screen.dart';
+// import 'package:crrfapp/pages/h03_pickup_confirmation_screen.dart';
+// import 'package:crrfapp/pages/h04_pickup_history_screen.dart';
+// import 'package:crrfapp/pages/h04_pickup_history_screen.dart';
+import 'package:crrfapp/pages/h05_pickup_detail_screen.dart';
 // import 'package:crrfapp/core/constants/app_constants.dart';
 import 'package:flutter/material.dart';
 
@@ -38,7 +42,10 @@ class MyApp extends StatelessWidget {
       // home: const ForgotPasswordScreen(),
       // home: const ProfileSettingsScreen(),
       // home: const HouseholdDashboardScreen(),
-      home: const SchedulePickupScreen(),
+      // home: const SchedulePickupScreen(),
+      // home: const PickupDetailScreen(refNumber: "123"),
+      // home: const PickupConfirmationScreen(),
+      home: const PickupDetailScreen(refNumber: "123"),
     );
   }
 }

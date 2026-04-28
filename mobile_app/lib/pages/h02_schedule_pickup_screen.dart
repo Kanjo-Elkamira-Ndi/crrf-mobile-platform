@@ -72,45 +72,15 @@ class _SchedulePickupScreenState extends State<SchedulePickupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppBar(
-        backgroundColor: AppColors.white,
-        elevation: 0,
-        scrolledUnderElevation: 1,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_rounded, color: AppColors.textPrimary),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Collection Schedule', style: AppTextStyles.h4.copyWith(color: AppColors.textPrimary)),
-            Text('Track your waste pickup dates', style: AppTextStyles.caption),
-          ],
-        ),
-        actions: [
-          CircleAvatar(
-            radius: 18,
-            backgroundColor: AppColors.greenLighter,
-            child: const Icon(Icons.person_rounded, color: AppColors.forestGreen, size: 20),
-          ),
-          const SizedBox(width: AppConstants.spacingM),
-        ],
-      ),
-      body: Column(
+    return CrrfScaffold(
+      currentTab: CrrfNavTab.schedule,
+      persistentFooter: _buildBottomBar(),
+      body: ListView(
+        padding: const EdgeInsets.symmetric(vertical: AppConstants.spacingM),
         children: [
-          Expanded(
-            child: ListView(
-              padding: const EdgeInsets.symmetric(vertical: AppConstants.spacingM),
-              children: [
-                _buildCalendar(),
-                _buildUpcomingPickups(),
-                _buildScheduleSection(),
-              ],
-            ),
-          ),
-          _buildBottomBar(),
+          _buildCalendar(),
+          _buildUpcomingPickups(),
+          _buildScheduleSection(),
         ],
       ),
     );
