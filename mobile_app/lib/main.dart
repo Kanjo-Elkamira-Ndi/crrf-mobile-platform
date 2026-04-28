@@ -7,7 +7,8 @@
 // import 'package:crrfapp/pages/otp_verification_screen.dart';
 // import 'package:crrfapp/pages/login_screen.dart';
 // import 'package:crrfapp/pages/forgot_password_screen.dart';
-import 'package:crrfapp/pages/notifications_screen.dart';
+// import 'package:crrfapp/pages/notifications_screen.dart';
+import 'package:crrfapp/pages/profile_settings_screen.dart';
 // import 'package:crrfapp/core/constants/app_constants.dart';
 import 'package:flutter/material.dart';
 
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
       // ),
       // home: const LoginScreen(),
       // home: const ForgotPasswordScreen(),
-      home: const NotificationsScreen(),
+      home: const ProfileSettingsScreen(),
     );
   }
 }
