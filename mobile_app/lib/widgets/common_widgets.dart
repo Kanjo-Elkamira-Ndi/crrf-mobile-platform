@@ -596,7 +596,7 @@ class CrrfBottomNavBar extends StatelessWidget {
 
   static const _kBarHeight = 68.0;
   static const _kFabSize = 58.0;
-  static const _kFabElevation = 6.0;
+  // static const _kFabElevation = 6.0;
 
   @override
   Widget build(BuildContext context) {
