@@ -4,7 +4,6 @@ import '../../../core/theme/app_text_styles.dart';
 import '../../../core/constants/app_constants.dart';
 import '../../../widgets/common_widgets.dart';
 
-// ─── Shared product model (used across F-02, F-03, F-04) ─────
 class ManureProduct {
   final String id, name, description, unitLabel, category;
   final int creditPrice;

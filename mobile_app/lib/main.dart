@@ -23,8 +23,9 @@
 // import 'package:crrfapp/pages/h12_support_screen.dart';
 // import 'package:crrfapp/pages/f01_dashboard_screen.dart';
 // import 'package:crrfapp/pages/f02_marketplace_catalog_screen.dart';
-import 'package:crrfapp/pages/f03_product_detail_screen.dart';
-// import 'package:crrfapp/pages/f02_f03_catalog_product_screens.dart';
+// import 'package:crrfapp/pages/f03_product_detail_screen.dart';
+// import 'package:crrfapp/pages/f04_f05_f06_checkout_screens.dart';
+import 'package:crrfapp/pages/f04_cart_screen.dart';
 // import 'package:crrfapp/core/constants/app_constants.dart';
 import 'package:flutter/material.dart';
 
@@ -56,6 +57,7 @@ class MyApp extends StatelessWidget {
       // home: const SchedulePickupScreen(),
       // home: const PickupConfirmationScreen(),
       // home: const CancelPickupSheet(refNumber: "123"),
+      // home: const PickupHistoryScreen(),
       // home: const TransactionDetailScreen(txId: "124"),
       // home: const VoucherWalletScreen(),
       // home: const SupportScreen(),
@@ -66,7 +68,10 @@ class MyApp extends StatelessWidget {
       // home: const FarmerDashboardScreen(),
       // home: const ProductDetailScreen(productId: "123"),
       // home: const MarketplaceCatalogScreen(),
-      home: const ProductDetailScreen(productId: "123"),
+      // home: const ProductDetailScreen(productId: "123"),
+      home: const CartScreen(),
+      // home: const DeliveryDetailsScreen(),
+      // home: const OrderConfirmationScreen(),
     );
   }
 }
