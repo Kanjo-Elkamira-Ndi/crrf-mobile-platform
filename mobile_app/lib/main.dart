@@ -13,7 +13,10 @@
 // import 'package:crrfapp/pages/h03_pickup_confirmation_screen.dart';
 // import 'package:crrfapp/pages/h04_pickup_history_screen.dart';
 // import 'package:crrfapp/pages/h04_pickup_history_screen.dart';
-import 'package:crrfapp/pages/h05_pickup_detail_screen.dart';
+// import 'package:crrfapp/pages/h05_pickup_detail_screen.dart';
+// import 'package:crrfapp/pages/h06_cancel_pickup_sheet.dart';
+// import 'package:crrfapp/pages/h07_voucher_wallet_screen.dart';
+import 'package:crrfapp/pages/h08_transaction_detail_screen.dart';
 // import 'package:crrfapp/core/constants/app_constants.dart';
 import 'package:flutter/material.dart';
 
@@ -45,7 +48,9 @@ class MyApp extends StatelessWidget {
       // home: const SchedulePickupScreen(),
       // home: const PickupDetailScreen(refNumber: "123"),
       // home: const PickupConfirmationScreen(),
-      home: const PickupDetailScreen(refNumber: "123"),
+      // home: const CancelPickupSheet(refNumber: "123"),
+      home: const TransactionDetailScreen(txId: "124"),
+      // home: const VoucherWalletScreen(),
     );
   }
 }
