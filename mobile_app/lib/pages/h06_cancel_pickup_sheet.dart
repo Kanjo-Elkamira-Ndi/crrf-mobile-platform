@@ -140,7 +140,7 @@ class _CancelPickupSheetState extends State<CancelPickupSheet> {
                   const SizedBox(height: 24),
 
                   // Section title
-                  Text('Why are you cancelling?', style: AppTextStyles.h4),
+                  Text('Why are you cancelling?', style: AppTextStyles.h4.copyWith(decoration: TextDecoration.none)),
                   const SizedBox(height: 12),
                 ],
               ),
@@ -199,6 +199,7 @@ class _CancelPickupSheetState extends State<CancelPickupSheet> {
                               style: AppTextStyles.body.copyWith(
                                 color: isSelected ? AppColors.errorRed : AppColors.textPrimary,
                                 fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+                                decoration: TextDecoration.none,
                               ),
                             ),
                           ),
@@ -245,7 +246,7 @@ class _CancelPickupSheetState extends State<CancelPickupSheet> {
                             borderRadius: BorderRadius.circular(AppConstants.radiusM),
                           ),
                         ),
-                        child: Text('Go Back', style: AppTextStyles.body.copyWith(fontWeight: FontWeight.w600)),
+                        child: Text('Go Back', style: AppTextStyles.body.copyWith(fontWeight: FontWeight.w600, decoration: TextDecoration.none)),
                       ),
                     ),
                   ),
@@ -278,7 +279,7 @@ class _CancelPickupSheetState extends State<CancelPickupSheet> {
                                 children: [
                                   const Icon(Icons.cancel_rounded, size: 20),
                                   const SizedBox(width: 8),
-                                  Text('Cancel Pickup', style: AppTextStyles.body.copyWith(fontWeight: FontWeight.w600, color: AppColors.white)),
+                                  Text('Cancel Pickup', style: AppTextStyles.body.copyWith(fontWeight: FontWeight.w600, color: AppColors.white, decoration: TextDecoration.none)),
                                 ],
                               ),
                       ),
