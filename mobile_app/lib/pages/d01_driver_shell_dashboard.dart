@@ -5,196 +5,6 @@ import '../../../core/constants/app_constants.dart';
 import '../../../widgets/common_widgets.dart';
 
 // ═════════════════════════════════════════════════════════════
-// DRIVER SHELL — Bottom Navigation Wrapper
-// ═════════════════════════════════════════════════════════════
-/// Wraps all driver screens inside a persistent bottom nav bar.
-/// 4 tabs: Home · My Route · History · Profile
-///
-/// Tab 1 → DriverDashboardScreen   (D-01)
-/// Tab 2 → DailyRouteScreen        (D-02) — entry to D-03/D-04/D-05/D-06
-/// Tab 3 → DriverHistoryScreen     (D-07)
-/// Tab 4 → ProfileScreen           (S-09 shared)
-///
-/// D-05 (Confirm Success) and D-06 (Report Issue) are pushed
-/// onto the Route tab stack and pop back to D-02 automatically.
-class DriverShell extends StatefulWidget {
-  const DriverShell({super.key});
-
-  @override
-  State<DriverShell> createState() => _DriverShellState();
-}
-
-class _DriverShellState extends State<DriverShell> {
-  int _currentIndex = 0;
-
-  // Each tab owns its own NavigatorKey so back-stack is
-  // preserved when switching between tabs.
-  final List<GlobalKey<NavigatorState>> _navKeys = List.generate(
-    4,
-    (_) => GlobalKey<NavigatorState>(),
-  );
-
-  static const _tabs = [
-    _TabItem(icon: Icons.dashboard_rounded, label: 'Home'),
-    _TabItem(icon: Icons.route_rounded, label: 'My Route'),
-    _TabItem(icon: Icons.history_rounded, label: 'History'),
-    _TabItem(icon: Icons.person_outline_rounded, label: 'Profile'),
-  ];
-
-  void _onTabTapped(int index) {
-    if (index == _currentIndex) {
-      // Tap same tab → pop to root of that tab's stack
-      _navKeys[index].currentState?.popUntil((r) => r.isFirst);
-    } else {
-      setState(() => _currentIndex = index);
-    }
-  }
-
-  // Intercept Android back button — first pop within tab, then exit
-  Future<bool> _onWillPop() async {
-    final nav = _navKeys[_currentIndex].currentState;
-    if (nav != null && nav.canPop()) {
-      nav.pop();
-      return false;
-    }
-    return true;
-  }
-
-  Widget _buildTab(int index) {
-    switch (index) {
-      case 0:
-        return const DriverDashboardScreen();
-      case 1:
-        return const DailyRouteScreen();
-      case 2:
-        return const DriverHistoryScreen();
-      case 3:
-        return const Center(child: Text('Profile — shared screen (S-09)'));
-      default:
-        return const SizedBox.shrink();
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: _onWillPop,
-      child: Scaffold(
-        body: IndexedStack(
-          index: _currentIndex,
-          children: List.generate(4, (i) {
-            return Navigator(
-              key: _navKeys[i],
-              onGenerateRoute: (settings) => MaterialPageRoute(
-                builder: (_) => _buildTab(i),
-                settings: settings,
-              ),
-            );
-          }),
-        ),
-        bottomNavigationBar: _DriverBottomNav(
-          currentIndex: _currentIndex,
-          tabs: _tabs,
-          onTap: _onTabTapped,
-        ),
-      ),
-    );
-  }
-}
-
-// ─── Bottom nav bar ────────────────────────────────────────────
-class _TabItem {
-  final IconData icon;
-  final String label;
-  const _TabItem({required this.icon, required this.label});
-}
-
-class _DriverBottomNav extends StatelessWidget {
-  final int currentIndex;
-  final List<_TabItem> tabs;
-  final void Function(int) onTap;
-
-  const _DriverBottomNav({
-    required this.currentIndex,
-    required this.tabs,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        color: AppColors.white,
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.shadow,
-            blurRadius: 12,
-            offset: Offset(0, -4),
-          ),
-        ],
-      ),
-      child: SafeArea(
-        child: SizedBox(
-          height: 64,
-          child: Row(
-            children: List.generate(tabs.length, (i) {
-              final isActive = i == currentIndex;
-              final tab = tabs[i];
-              return Expanded(
-                child: GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () => onTap(i),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      AnimatedContainer(
-                        duration: AppConstants.animFast,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 14,
-                          vertical: 4,
-                        ),
-                        decoration: BoxDecoration(
-                          color: isActive
-                              ? AppColors.infoBlue.withValues(alpha: 0.12)
-                              : Colors.transparent,
-                          borderRadius: BorderRadius.circular(
-                            AppConstants.radiusPill,
-                          ),
-                        ),
-                        child: Icon(
-                          tab.icon,
-                          size: 24,
-                          color: isActive
-                              ? AppColors.infoBlue
-                              : AppColors.textHint,
-                        ),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        tab.label,
-                        style:
-                            (isActive
-                                    ? AppTextStyles.navLabelSelected
-                                    : AppTextStyles.navLabel)
-                                .copyWith(
-                                  color: isActive
-                                      ? AppColors.infoBlue
-                                      : AppColors.textHint,
-                                ),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            }),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-// ═════════════════════════════════════════════════════════════
 // D-01 — Driver Dashboard Screen
 // ═════════════════════════════════════════════════════════════
 /// Home screen for the driver.
@@ -226,186 +36,190 @@ class _DriverDashboardScreenState extends State<DriverDashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      body: CustomScrollView(
-        slivers: [
-          // ── App bar ──────────────────────────────────────────
-          SliverAppBar(
-            backgroundColor: AppColors.infoBlue,
-            floating: true,
-            elevation: 0,
-            automaticallyImplyLeading: false,
-            title: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Good morning, $_driverName 🚛',
-                  style: AppTextStyles.h4.copyWith(color: AppColors.white),
-                ),
-                Text(
-                  "Today's shift",
-                  style: AppTextStyles.caption.copyWith(
-                    color: AppColors.white.withValues(alpha: 0.75),
+    return DriverScaffold(
+      currentTab: DriverNavTab.home,
+      body: Scaffold(
+        backgroundColor: AppColors.background,
+        body: CustomScrollView(
+          slivers: [
+            // ── App bar ──────────────────────────────────────────
+            SliverAppBar(
+              backgroundColor: AppColors.infoBlue,
+              floating: true,
+              elevation: 0,
+              automaticallyImplyLeading: false,
+              title: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Good morning, $_driverName 🚛',
+                    style: AppTextStyles.h4.copyWith(color: AppColors.white),
                   ),
-                ),
-              ],
-            ),
-            actions: [
-              // Shift toggle
-              Padding(
-                padding: const EdgeInsets.only(right: 16),
-                child: Row(
-                  children: [
-                    Text(
-                      _isOnDuty ? 'On Duty' : 'Off Duty',
-                      style: AppTextStyles.caption.copyWith(
-                        color: AppColors.white.withValues(alpha: 0.85),
-                        fontWeight: FontWeight.w600,
-                      ),
+                  Text(
+                    "Today's shift",
+                    style: AppTextStyles.caption.copyWith(
+                      color: AppColors.white.withValues(alpha: 0.75),
                     ),
-                    const SizedBox(width: 6),
-                    GestureDetector(
-                      onTap: () => setState(() => _isOnDuty = !_isOnDuty),
-                      child: AnimatedContainer(
-                        duration: AppConstants.animFast,
-                        width: 44,
-                        height: 26,
-                        decoration: BoxDecoration(
-                          color: _isOnDuty
-                              ? AppColors.successGreen
-                              : AppColors.textHint,
-                          borderRadius: BorderRadius.circular(
-                            AppConstants.radiusPill,
-                          ),
+                  ),
+                ],
+              ),
+              actions: [
+                // Shift toggle
+                Padding(
+                  padding: const EdgeInsets.only(right: 16),
+                  child: Row(
+                    children: [
+                      Text(
+                        _isOnDuty ? 'On Duty' : 'Off Duty',
+                        style: AppTextStyles.caption.copyWith(
+                          color: AppColors.white.withValues(alpha: 0.85),
+                          fontWeight: FontWeight.w600,
                         ),
-                        child: AnimatedAlign(
+                      ),
+                      const SizedBox(width: 6),
+                      GestureDetector(
+                        onTap: () => setState(() => _isOnDuty = !_isOnDuty),
+                        child: AnimatedContainer(
                           duration: AppConstants.animFast,
-                          alignment: _isOnDuty
-                              ? Alignment.centerRight
-                              : Alignment.centerLeft,
-                          child: Container(
-                            margin: const EdgeInsets.all(3),
-                            width: 20,
-                            height: 20,
-                            decoration: const BoxDecoration(
-                              color: AppColors.white,
-                              shape: BoxShape.circle,
+                          width: 44,
+                          height: 26,
+                          decoration: BoxDecoration(
+                            color: _isOnDuty
+                                ? AppColors.successGreen
+                                : AppColors.textHint,
+                            borderRadius: BorderRadius.circular(
+                              AppConstants.radiusPill,
+                            ),
+                          ),
+                          child: AnimatedAlign(
+                            duration: AppConstants.animFast,
+                            alignment: _isOnDuty
+                                ? Alignment.centerRight
+                                : Alignment.centerLeft,
+                            child: Container(
+                              margin: const EdgeInsets.all(3),
+                              width: 20,
+                              height: 20,
+                              decoration: const BoxDecoration(
+                                color: AppColors.white,
+                                shape: BoxShape.circle,
+                              ),
                             ),
                           ),
                         ),
                       ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // ── Not on duty warning ──────────────────────
+                    if (!_isOnDuty) ...[
+                      const CalloutCard(
+                        message:
+                            'You are currently Off Duty. Toggle to On Duty to start completing pickups.',
+                        type: CalloutType.warning,
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+
+                    // ── Today's progress card ────────────────────
+                    _ProgressCard(
+                      total: _totalToday,
+                      completed: _completed,
+                      skipped: _skipped,
+                      remaining: _remaining,
+                      progress: _progress,
                     ),
+
+                    const SizedBox(height: 20),
+
+                    // ── Start Route CTA ─────────────────────────
+                    if (_isOnDuty && _remaining > 0)
+                      _StartRouteButton(
+                        remaining: _remaining,
+                        onTap: () {
+                          // Switch to Route tab (index 1)
+                          // In real app: DriverShell._onTabTapped(1) via callback
+                          Navigator.of(context).pushNamed(AppRoutes.dailyRoute);
+                        },
+                      ),
+
+                    if (_remaining == 0 && _isOnDuty) ...[
+                      const CalloutCard(
+                        message:
+                            '🎉 All pickups completed for today! Great work.',
+                        type: CalloutType.success,
+                      ),
+                    ],
+
+                    const SizedBox(height: 20),
+
+                    // ── Stats row ────────────────────────────────
+                    Row(
+                      children: [
+                        _DashStat(
+                          value: '12.4 kg',
+                          label: 'Collected Today',
+                          icon: Icons.scale_rounded,
+                          color: AppColors.forestGreen,
+                          bg: AppColors.greenLighter,
+                        ),
+                        const SizedBox(width: 12),
+                        _DashStat(
+                          value: '$_skipped',
+                          label: 'Skipped Today',
+                          icon: Icons.warning_amber_rounded,
+                          color: AppColors.warningAmber,
+                          bg: AppColors.warningLight,
+                        ),
+                        const SizedBox(width: 12),
+                        _DashStat(
+                          value: '87%',
+                          label: 'Completion Rate',
+                          icon: Icons.insights_rounded,
+                          color: AppColors.infoBlue,
+                          bg: AppColors.infoLight,
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 24),
+
+                    // ── Pending unconfirmed alert ─────────────────
+                    if (_completed < _totalToday && _isOnDuty)
+                      _PendingAlert(
+                        remaining: _remaining,
+                        onViewRoute: () {
+                          Navigator.of(context).pushNamed(AppRoutes.dailyRoute);
+                        },
+                      ),
+
+                    const SizedBox(height: 24),
+
+                    // ── Next pickup preview ──────────────────────
+                    if (_remaining > 0) ...[
+                      SectionHeader(title: 'Next Pickup'),
+                      const SizedBox(height: 12),
+                      _NextPickupCard(
+                        onTap: () => Navigator.of(
+                          context,
+                        ).pushNamed(AppRoutes.pickupTask),
+                      ),
+                    ],
                   ],
                 ),
               ),
-            ],
-          ),
-
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // ── Not on duty warning ──────────────────────
-                  if (!_isOnDuty) ...[
-                    const CalloutCard(
-                      message:
-                          'You are currently Off Duty. Toggle to On Duty to start completing pickups.',
-                      type: CalloutType.warning,
-                    ),
-                    const SizedBox(height: 16),
-                  ],
-
-                  // ── Today's progress card ────────────────────
-                  _ProgressCard(
-                    total: _totalToday,
-                    completed: _completed,
-                    skipped: _skipped,
-                    remaining: _remaining,
-                    progress: _progress,
-                  ),
-
-                  const SizedBox(height: 20),
-
-                  // ── Start Route CTA ─────────────────────────
-                  if (_isOnDuty && _remaining > 0)
-                    _StartRouteButton(
-                      remaining: _remaining,
-                      onTap: () {
-                        // Switch to Route tab (index 1)
-                        // In real app: DriverShell._onTabTapped(1) via callback
-                        Navigator.of(context).pushNamed(AppRoutes.dailyRoute);
-                      },
-                    ),
-
-                  if (_remaining == 0 && _isOnDuty) ...[
-                    const CalloutCard(
-                      message:
-                          '🎉 All pickups completed for today! Great work.',
-                      type: CalloutType.success,
-                    ),
-                  ],
-
-                  const SizedBox(height: 20),
-
-                  // ── Stats row ────────────────────────────────
-                  Row(
-                    children: [
-                      _DashStat(
-                        value: '12.4 kg',
-                        label: 'Collected Today',
-                        icon: Icons.scale_rounded,
-                        color: AppColors.forestGreen,
-                        bg: AppColors.greenLighter,
-                      ),
-                      const SizedBox(width: 12),
-                      _DashStat(
-                        value: '$_skipped',
-                        label: 'Skipped Today',
-                        icon: Icons.warning_amber_rounded,
-                        color: AppColors.warningAmber,
-                        bg: AppColors.warningLight,
-                      ),
-                      const SizedBox(width: 12),
-                      _DashStat(
-                        value: '87%',
-                        label: 'Completion Rate',
-                        icon: Icons.insights_rounded,
-                        color: AppColors.infoBlue,
-                        bg: AppColors.infoLight,
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 24),
-
-                  // ── Pending unconfirmed alert ─────────────────
-                  if (_completed < _totalToday && _isOnDuty)
-                    _PendingAlert(
-                      remaining: _remaining,
-                      onViewRoute: () {
-                        Navigator.of(context).pushNamed(AppRoutes.dailyRoute);
-                      },
-                    ),
-
-                  const SizedBox(height: 24),
-
-                  // ── Next pickup preview ──────────────────────
-                  if (_remaining > 0) ...[
-                    SectionHeader(title: 'Next Pickup'),
-                    const SizedBox(height: 12),
-                    _NextPickupCard(
-                      onTap: () =>
-                          Navigator.of(context).pushNamed(AppRoutes.pickupTask),
-                    ),
-                  ],
-                ],
-              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -821,22 +635,4 @@ class _WasteChip extends StatelessWidget {
       ),
     );
   }
-}
-
-// ─── Placeholder screens (bodies are in their own files) ──────
-// These forward declarations satisfy the IndexedStack in DriverShell.
-// The actual implementations live in d02_route_screen.dart etc.
-class DailyRouteScreen extends StatelessWidget {
-  const DailyRouteScreen({super.key});
-  @override
-  Widget build(BuildContext context) => const Center(
-    child: Text('Daily Route — see d02_d03_route_task_screens.dart'),
-  );
-}
-
-class DriverHistoryScreen extends StatelessWidget {
-  const DriverHistoryScreen({super.key});
-  @override
-  Widget build(BuildContext context) =>
-      const Center(child: Text('Driver History — see d07_history_screen.dart'));
 }

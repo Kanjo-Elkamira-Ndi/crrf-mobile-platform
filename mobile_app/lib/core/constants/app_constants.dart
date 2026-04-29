@@ -146,6 +146,7 @@ abstract class AppRoutes {
   static const String confirmSuccess = '/driver/confirm-success';
   static const String reportIssue = '/driver/report-issue';
   static const String driverHistory = '/driver/history';
+  static const String driverRoute = '/driver/route';
 
   // ─── Admin ────────────────────────────────────────────────
   static const String adminHome = '/admin';

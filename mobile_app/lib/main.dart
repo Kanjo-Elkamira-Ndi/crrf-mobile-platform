@@ -32,6 +32,8 @@
 // import 'package:crrfapp/pages/f08_order_detail_screen.dart';
 // import 'package:crrfapp/pages/f09_micro_loan_info_screen.dart';
 import 'package:crrfapp/pages/d01_driver_shell_dashboard.dart';
+// import 'package:crrfapp/pages/d01_driver_shell_dashboard.dart';
+// import 'package:crrfapp/pages/d02_d03_route_task_screens.dart';
 // import 'package:crrfapp/core/constants/app_constants.dart';
 import 'package:flutter/material.dart';
 
@@ -82,6 +84,8 @@ class MyApp extends StatelessWidget {
       // home: const OrderHistoryScreen(),
       // home: const MicroLoanInfoScreen(),
       home: const DriverDashboardScreen(),
+      // home: const DailyRouteListScreen(),
+      // home: const PickupTaskDetailScreen(taskId: "123"),
     );
   }
 }
