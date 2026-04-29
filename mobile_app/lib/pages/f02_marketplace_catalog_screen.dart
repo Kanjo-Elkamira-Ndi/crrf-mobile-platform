@@ -176,178 +176,182 @@ class _MarketplaceCatalogScreenState extends State<MarketplaceCatalogScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppBar(
-        title: const Text('Marketplace'),
-        leading: const BackButton(),
-        actions: [
-          // Cart icon with badge
-          Stack(
-            children: [
-              IconButton(
-                icon: const Icon(Icons.shopping_cart_outlined),
-                onPressed: () =>
-                    Navigator.of(context).pushNamed(AppRoutes.cart),
-              ),
-              if (_cartItemCount > 0)
-                Positioned(
-                  top: 8,
-                  right: 8,
-                  child: Container(
-                    width: 16,
-                    height: 16,
-                    decoration: const BoxDecoration(
-                      color: AppColors.errorRed,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Center(
-                      child: Text(
-                        '$_cartItemCount',
-                        style: const TextStyle(
-                          color: AppColors.white,
-                          fontSize: 9,
-                          fontWeight: FontWeight.w700,
+    return FarmerScaffold(
+      currentTab: FarmerNavTab.orders, // This highlights the shop icon
+      body: Scaffold(
+        backgroundColor: AppColors.background,
+        appBar: AppBar(
+          title: const Text('Marketplace'),
+          leading: const BackButton(),
+          actions: [
+            // Cart icon with badge
+            Stack(
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.shopping_cart_outlined),
+                  onPressed: () =>
+                      Navigator.of(context).pushNamed(AppRoutes.cart),
+                ),
+                if (_cartItemCount > 0)
+                  Positioned(
+                    top: 8,
+                    right: 8,
+                    child: Container(
+                      width: 16,
+                      height: 16,
+                      decoration: const BoxDecoration(
+                        color: AppColors.errorRed,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Center(
+                        child: Text(
+                          '$_cartItemCount',
+                          style: const TextStyle(
+                            color: AppColors.white,
+                            fontSize: 9,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-            ],
-          ),
-        ],
-      ),
-      body: Column(
-        children: [
-          // ── Search + filters ──────────────────────────────────
-          Container(
-            color: AppColors.white,
-            padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
-            child: Column(
-              children: [
-                // Search bar
-                TextField(
-                  controller: _searchController,
-                  onChanged: (v) => setState(() => _searchQuery = v),
-                  style: AppTextStyles.body,
-                  decoration: InputDecoration(
-                    hintText: 'Search products...',
-                    hintStyle: AppTextStyles.inputHint,
-                    prefixIcon: const Icon(
-                      Icons.search_rounded,
-                      color: AppColors.textHint,
-                    ),
-                    suffixIcon: _searchQuery.isNotEmpty
-                        ? IconButton(
-                            icon: const Icon(Icons.clear_rounded, size: 18),
-                            onPressed: () {
-                              _searchController.clear();
-                              setState(() => _searchQuery = '');
-                            },
-                          )
-                        : null,
-                    filled: true,
-                    fillColor: AppColors.background,
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 16,
-                      vertical: 12,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide.none,
+              ],
+            ),
+          ],
+        ),
+        body: Column(
+          children: [
+            // ── Search + filters ──────────────────────────────────
+            Container(
+              color: AppColors.white,
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 12),
+              child: Column(
+                children: [
+                  // Search bar
+                  TextField(
+                    controller: _searchController,
+                    onChanged: (v) => setState(() => _searchQuery = v),
+                    style: AppTextStyles.body,
+                    decoration: InputDecoration(
+                      hintText: 'Search products...',
+                      hintStyle: AppTextStyles.inputHint,
+                      prefixIcon: const Icon(
+                        Icons.search_rounded,
+                        color: AppColors.textHint,
+                      ),
+                      suffixIcon: _searchQuery.isNotEmpty
+                          ? IconButton(
+                              icon: const Icon(Icons.clear_rounded, size: 18),
+                              onPressed: () {
+                                _searchController.clear();
+                                setState(() => _searchQuery = '');
+                              },
+                            )
+                          : null,
+                      filled: true,
+                      fillColor: AppColors.background,
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide.none,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(height: 10),
+                  const SizedBox(height: 10),
 
-                // Category chips
-                SizedBox(
-                  height: 34,
-                  child: ListView(
-                    scrollDirection: Axis.horizontal,
-                    children: _categories.map((c) {
-                      final isActive = _selectedCategory == c['key'];
-                      return GestureDetector(
-                        onTap: () =>
-                            setState(() => _selectedCategory = c['key']!),
-                        child: AnimatedContainer(
-                          duration: AppConstants.animFast,
-                          margin: const EdgeInsets.only(right: 8),
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          decoration: BoxDecoration(
-                            color: isActive
-                                ? AppColors.earthBrown
-                                : AppColors.surfaceGray,
-                            borderRadius: BorderRadius.circular(
-                              AppConstants.radiusPill,
+                  // Category chips
+                  SizedBox(
+                    height: 34,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: _categories.map((c) {
+                        final isActive = _selectedCategory == c['key'];
+                        return GestureDetector(
+                          onTap: () =>
+                              setState(() => _selectedCategory = c['key']!),
+                          child: AnimatedContainer(
+                            duration: AppConstants.animFast,
+                            margin: const EdgeInsets.only(right: 8),
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            decoration: BoxDecoration(
+                              color: isActive
+                                  ? AppColors.earthBrown
+                                  : AppColors.surfaceGray,
+                              borderRadius: BorderRadius.circular(
+                                AppConstants.radiusPill,
+                              ),
                             ),
-                          ),
-                          child: Center(
-                            child: Text(
-                              c['label']!,
-                              style: AppTextStyles.buttonSmall.copyWith(
-                                color: isActive
-                                    ? AppColors.white
-                                    : AppColors.textSecondary,
+                            child: Center(
+                              child: Text(
+                                c['label']!,
+                                style: AppTextStyles.buttonSmall.copyWith(
+                                  color: isActive
+                                      ? AppColors.white
+                                      : AppColors.textSecondary,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const Divider(height: 1),
-
-          // ── Product grid ──────────────────────────────────────
-          Expanded(
-            child: _filtered.isEmpty
-                ? EmptyStateWidget(
-                    icon: Icons.search_off_rounded,
-                    title: 'No products found',
-                    subtitle: 'Try a different search or category.',
-                  )
-                : GridView.builder(
-                    padding: const EdgeInsets.all(16),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 0.72,
-                          crossAxisSpacing: 12,
-                          mainAxisSpacing: 12,
-                        ),
-                    itemCount: _filtered.length,
-                    itemBuilder: (_, i) => _ProductCard(
-                      product: _filtered[i],
-                      onTap: () => Navigator.of(context).pushNamed(
-                        AppRoutes.productDetail,
-                        arguments: {'productId': _filtered[i].id},
-                      ),
-                      onAddToCart: _filtered[i].isOutOfStock
-                          ? null
-                          : () => setState(() => _cartItemCount++),
+                        );
+                      }).toList(),
                     ),
                   ),
-          ),
-        ],
-      ),
-
-      // ── Floating cart button ──────────────────────────────────
-      floatingActionButton: _cartItemCount > 0
-          ? FloatingActionButton.extended(
-              onPressed: () => Navigator.of(context).pushNamed(AppRoutes.cart),
-              backgroundColor: AppColors.earthBrown,
-              foregroundColor: AppColors.white,
-              icon: const Icon(Icons.shopping_cart_rounded),
-              label: Text(
-                'View Cart ($_cartItemCount)',
-                style: AppTextStyles.button,
+                ],
               ),
-            )
-          : null,
+            ),
+            const Divider(height: 1),
+
+            // ── Product grid ──────────────────────────────────────
+            Expanded(
+              child: _filtered.isEmpty
+                  ? EmptyStateWidget(
+                      icon: Icons.search_off_rounded,
+                      title: 'No products found',
+                      subtitle: 'Try a different search or category.',
+                    )
+                  : GridView.builder(
+                      padding: const EdgeInsets.all(16),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.72,
+                            crossAxisSpacing: 12,
+                            mainAxisSpacing: 12,
+                          ),
+                      itemCount: _filtered.length,
+                      itemBuilder: (_, i) => _ProductCard(
+                        product: _filtered[i],
+                        onTap: () => Navigator.of(context).pushNamed(
+                          AppRoutes.productDetail,
+                          arguments: {'productId': _filtered[i].id},
+                        ),
+                        onAddToCart: _filtered[i].isOutOfStock
+                            ? null
+                            : () => setState(() => _cartItemCount++),
+                      ),
+                    ),
+            ),
+          ],
+        ),
+
+        // ── Floating cart button ──────────────────────────────────
+        floatingActionButton: _cartItemCount > 0
+            ? FloatingActionButton.extended(
+                onPressed: () =>
+                    Navigator.of(context).pushNamed(AppRoutes.cart),
+                backgroundColor: AppColors.earthBrown,
+                foregroundColor: AppColors.white,
+                icon: const Icon(Icons.shopping_cart_rounded),
+                label: Text(
+                  'View Cart ($_cartItemCount)',
+                  style: AppTextStyles.button,
+                ),
+              )
+            : null,
+      ),
     );
   }
 }
