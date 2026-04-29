@@ -135,7 +135,9 @@ abstract class AppRoutes {
   static const String orderHistory = '/farmer/order-history';
   static const String orderDetail = '/farmer/order-detail';
   static const String microLoanInfo = '/farmer/micro-loan';
-
+  static const String farmerOrders = '/farmer/orders';
+  static const String requestManure = '/farmer/request-manure';
+  static const String farmerInsights = '/farmer/insights';
   // ─── Driver ───────────────────────────────────────────────
   static const String driverHome = '/driver';
   static const String dailyRoute = '/driver/route';
