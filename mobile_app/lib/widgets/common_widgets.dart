@@ -622,7 +622,7 @@ class CrrfBottomNavBar extends StatelessWidget {
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.08),
+                    color: Colors.black.withValues(alpha: 0.08),
                     blurRadius: 16,
                     offset: const Offset(0, -4),
                   ),
@@ -687,7 +687,7 @@ class CrrfBottomNavBar extends StatelessWidget {
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
-                      color: AppColors.forestGreen.withOpacity(0.45),
+                      color: AppColors.forestGreen.withValues(alpha: 0.45),
                       blurRadius: 14,
                       spreadRadius: 1,
                       offset: const Offset(0, 4),
@@ -712,9 +712,6 @@ class CrrfBottomNavBar extends StatelessWidget {
 }
 
 // ─── Single nav item ──────────────────────────────────────────
-// Replace the existing _NavItem with two separate widgets
-
-// ─── Regular nav item for household ──────────────────────────
 class _NavItem extends StatelessWidget {
   final IconData icon;
   final String label;
@@ -747,71 +744,7 @@ class _NavItem extends StatelessWidget {
               padding: const EdgeInsets.all(6),
               decoration: BoxDecoration(
                 color: isActive
-                    ? AppColors.forestGreen.withValues(alpha: 0.10)
-                    : Colors.transparent,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Icon(
-                icon,
-                size: 22,
-                color: isActive
-                    ? AppColors.forestGreen
-                    : const Color(0xFFAAAAAA),
-              ),
-            ),
-            const SizedBox(height: 2),
-            AnimatedDefaultTextStyle(
-              duration: const Duration(milliseconds: 180),
-              style: TextStyle(
-                fontSize: 11,
-                fontWeight: isActive ? FontWeight.w700 : FontWeight.w400,
-                color: isActive
-                    ? AppColors.forestGreen
-                    : const Color(0xFFAAAAAA),
-              ),
-              child: Text(label),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-// ─── Farmer nav item ──────────────────────────────────────────
-class _FarmerNavItem extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final FarmerNavTab tab;
-  final FarmerNavTab current;
-  final ValueChanged<FarmerNavTab> onTap;
-
-  const _FarmerNavItem({
-    required this.icon,
-    required this.label,
-    required this.tab,
-    required this.current,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final isActive = tab == current;
-
-    return GestureDetector(
-      onTap: () => onTap(tab),
-      behavior: HitTestBehavior.opaque,
-      child: SizedBox(
-        width: 64,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 180),
-              padding: const EdgeInsets.all(6),
-              decoration: BoxDecoration(
-                color: isActive
-                    ? AppColors.forestGreen.withValues(alpha: 0.10)
+                    ? AppColors.forestGreen.withOpacity(0.10)
                     : Colors.transparent,
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -920,6 +853,215 @@ class CrrfScaffold extends StatelessWidget {
 }
 
 // ═════════════════════════════════════════════════════════════
+//  DRIVER NAVIGATION
+// ═════════════════════════════════════════════════════════════
+
+/// The four driver nav destinations.
+/// No raised FAB — drivers act on assigned pickups only,
+/// so a flat 4-tab bar is cleaner while on the road.
+enum DriverNavTab { home, myRoute, history, profile }
+
+// ─── Driver nav item ──────────────────────────────────────────
+class _DriverNavItem extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final DriverNavTab tab;
+  final DriverNavTab current;
+  final ValueChanged<DriverNavTab> onTap;
+
+  const _DriverNavItem({
+    required this.icon,
+    required this.label,
+    required this.tab,
+    required this.current,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isActive = tab == current;
+
+    return GestureDetector(
+      onTap: () => onTap(tab),
+      behavior: HitTestBehavior.opaque,
+      child: SizedBox(
+        width: 72,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 180),
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: isActive
+                    ? AppColors.forestGreen.withValues(alpha: 0.10)
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(
+                icon,
+                size: 22,
+                color: isActive
+                    ? AppColors.forestGreen
+                    : const Color(0xFFAAAAAA),
+              ),
+            ),
+            const SizedBox(height: 2),
+            AnimatedDefaultTextStyle(
+              duration: const Duration(milliseconds: 180),
+              style: TextStyle(
+                fontSize: 11,
+                fontWeight: isActive ? FontWeight.w700 : FontWeight.w400,
+                color: isActive
+                    ? AppColors.forestGreen
+                    : const Color(0xFFAAAAAA),
+              ),
+              child: Text(label, textAlign: TextAlign.center),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+/// Persistent bottom nav bar for Driver screens.
+/// Home | My Route | History | Profile
+// ─────────────────────────────────────────────────────────────
+class DriverBottomNavBar extends StatelessWidget {
+  final DriverNavTab current;
+  final ValueChanged<DriverNavTab> onTap;
+
+  const DriverBottomNavBar({
+    super.key,
+    required this.current,
+    required this.onTap,
+  });
+
+  static const _kBarHeight = 68.0;
+
+  @override
+  Widget build(BuildContext context) {
+    final bottomPadding = MediaQuery.of(context).padding.bottom;
+
+    return Container(
+      height: _kBarHeight + bottomPadding,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.08),
+            blurRadius: 16,
+            offset: const Offset(0, -4),
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: EdgeInsets.only(bottom: bottomPadding),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _DriverNavItem(
+              icon: Icons.home_rounded,
+              label: 'Home',
+              tab: DriverNavTab.home,
+              current: current,
+              onTap: onTap,
+            ),
+            _DriverNavItem(
+              icon: Icons.alt_route_rounded,
+              label: 'My Route',
+              tab: DriverNavTab.myRoute,
+              current: current,
+              onTap: onTap,
+            ),
+            _DriverNavItem(
+              icon: Icons.history_rounded,
+              label: 'History',
+              tab: DriverNavTab.history,
+              current: current,
+              onTap: onTap,
+            ),
+            _DriverNavItem(
+              icon: Icons.person_outline_rounded,
+              label: 'Profile',
+              tab: DriverNavTab.profile,
+              current: current,
+              onTap: onTap,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+/// Drop-in Scaffold for all Driver screens.
+///
+/// Example:
+/// ```dart
+/// // Driver Home
+/// return DriverScaffold(
+///   currentTab: DriverNavTab.home,
+///   body: YourDriverHomeBody(),
+/// );
+///
+/// // My Route screen
+/// return DriverScaffold(
+///   currentTab: DriverNavTab.myRoute,
+///   body: MyRouteBody(),
+/// );
+/// ```
+// ─────────────────────────────────────────────────────────────
+class DriverScaffold extends StatelessWidget {
+  final DriverNavTab currentTab;
+  final Widget body;
+  final PreferredSizeWidget? appBar;
+
+  const DriverScaffold({
+    super.key,
+    required this.currentTab,
+    required this.body,
+    this.appBar,
+  });
+
+  static String _routeFor(DriverNavTab tab) {
+    switch (tab) {
+      case DriverNavTab.home:
+        return AppRoutes.driverHome;
+      case DriverNavTab.myRoute:
+        return AppRoutes.driverRoute;
+      case DriverNavTab.history:
+        return AppRoutes.driverHistory;
+      case DriverNavTab.profile:
+        return AppRoutes.profile; // shared across all roles
+    }
+  }
+
+  void _handleTap(BuildContext context, DriverNavTab tab) {
+    if (tab == currentTab) return;
+    Navigator.of(context).pushReplacementNamed(_routeFor(tab));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFFF5F7F5),
+      appBar: appBar,
+      body: body,
+      bottomNavigationBar: DriverBottomNavBar(
+        current: currentTab,
+        onTap: (tab) => _handleTap(context, tab),
+      ),
+    );
+  }
+}
+// Add this after the Driver navigation section, before the closing of the file
+
+// ═════════════════════════════════════════════════════════════
 //  FARMER NAVIGATION
 // ═════════════════════════════════════════════════════════════
 
@@ -927,11 +1069,74 @@ class CrrfScaffold extends StatelessWidget {
 /// item renders as a raised FAB-style button.
 enum FarmerNavTab { home, orders, requestManure, insights, profile }
 
+// ─── Farmer nav item ──────────────────────────────────────────
+class _FarmerNavItem extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final FarmerNavTab tab;
+  final FarmerNavTab current;
+  final ValueChanged<FarmerNavTab> onTap;
+
+  const _FarmerNavItem({
+    required this.icon,
+    required this.label,
+    required this.tab,
+    required this.current,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isActive = tab == current;
+
+    return GestureDetector(
+      onTap: () => onTap(tab),
+      behavior: HitTestBehavior.opaque,
+      child: SizedBox(
+        width: 64,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 180),
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: isActive
+                    ? AppColors.forestGreen.withValues(alpha: 0.10)
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(
+                icon,
+                size: 22,
+                color: isActive
+                    ? AppColors.forestGreen
+                    : const Color(0xFFAAAAAA),
+              ),
+            ),
+            const SizedBox(height: 2),
+            AnimatedDefaultTextStyle(
+              duration: const Duration(milliseconds: 180),
+              style: TextStyle(
+                fontSize: 11,
+                fontWeight: isActive ? FontWeight.w700 : FontWeight.w400,
+                color: isActive
+                    ? AppColors.forestGreen
+                    : const Color(0xFFAAAAAA),
+              ),
+              child: Text(label),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 // ─────────────────────────────────────────────────────────────
 /// Persistent bottom nav bar for Farmer screens.
 /// Home | Orders | [Request Manure FAB] | Insights | Profile
 // ─────────────────────────────────────────────────────────────
-
 class FarmerBottomNavBar extends StatelessWidget {
   final FarmerNavTab current;
   final ValueChanged<FarmerNavTab> onTap;
@@ -981,7 +1186,6 @@ class FarmerBottomNavBar extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     _FarmerNavItem(
-                      // Changed from _NavItem to _FarmerNavItem
                       icon: Icons.home_rounded,
                       label: 'Home',
                       tab: FarmerNavTab.home,
@@ -989,7 +1193,6 @@ class FarmerBottomNavBar extends StatelessWidget {
                       onTap: onTap,
                     ),
                     _FarmerNavItem(
-                      // Changed from _NavItem to _FarmerNavItem
                       icon: Icons.inventory_2_rounded,
                       label: 'Orders',
                       tab: FarmerNavTab.orders,
@@ -1001,7 +1204,6 @@ class FarmerBottomNavBar extends StatelessWidget {
                     const SizedBox(width: _kFabSize + 8),
 
                     _FarmerNavItem(
-                      // Changed from _NavItem to _FarmerNavItem
                       icon: Icons.bar_chart_rounded,
                       label: 'Insights',
                       tab: FarmerNavTab.insights,
@@ -1009,7 +1211,6 @@ class FarmerBottomNavBar extends StatelessWidget {
                       onTap: onTap,
                     ),
                     _FarmerNavItem(
-                      // Changed from _NavItem to _FarmerNavItem
                       icon: Icons.person_outline_rounded,
                       label: 'Profile',
                       tab: FarmerNavTab.profile,
