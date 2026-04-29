@@ -26,7 +26,9 @@
 // import 'package:crrfapp/pages/f03_product_detail_screen.dart';
 // import 'package:crrfapp/pages/f04_f05_f06_checkout_screens.dart';
 // import 'package:crrfapp/pages/f04_cart_screen.dart';
-import 'package:crrfapp/pages/f05_delivery_details_screen.dart';
+// import 'package:crrfapp/pages/f05_delivery_details_screen.dart';
+// import 'package:crrfapp/pages/f06_order_confirmation_screen.dart';
+import 'package:crrfapp/pages/f07_order_history_screen.dart';
 // import 'package:crrfapp/core/constants/app_constants.dart';
 import 'package:flutter/material.dart';
 
@@ -71,8 +73,10 @@ class MyApp extends StatelessWidget {
       // home: const MarketplaceCatalogScreen(),
       // home: const ProductDetailScreen(productId: "123"),
       // home: const CartScreen(),
-      home: const DeliveryDetailsScreen(),
+      // home: const DeliveryDetailsScreen(),
       // home: const OrderConfirmationScreen(),
+      // home: const OrderDetailScreen(orderId: "123"),
+      home: const OrderHistoryScreen(),
     );
   }
 }
