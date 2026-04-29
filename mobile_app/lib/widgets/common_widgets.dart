@@ -712,6 +712,9 @@ class CrrfBottomNavBar extends StatelessWidget {
 }
 
 // ─── Single nav item ──────────────────────────────────────────
+// Replace the existing _NavItem with two separate widgets
+
+// ─── Regular nav item for household ──────────────────────────
 class _NavItem extends StatelessWidget {
   final IconData icon;
   final String label;
@@ -744,7 +747,71 @@ class _NavItem extends StatelessWidget {
               padding: const EdgeInsets.all(6),
               decoration: BoxDecoration(
                 color: isActive
-                    ? AppColors.forestGreen.withOpacity(0.10)
+                    ? AppColors.forestGreen.withValues(alpha: 0.10)
+                    : Colors.transparent,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(
+                icon,
+                size: 22,
+                color: isActive
+                    ? AppColors.forestGreen
+                    : const Color(0xFFAAAAAA),
+              ),
+            ),
+            const SizedBox(height: 2),
+            AnimatedDefaultTextStyle(
+              duration: const Duration(milliseconds: 180),
+              style: TextStyle(
+                fontSize: 11,
+                fontWeight: isActive ? FontWeight.w700 : FontWeight.w400,
+                color: isActive
+                    ? AppColors.forestGreen
+                    : const Color(0xFFAAAAAA),
+              ),
+              child: Text(label),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ─── Farmer nav item ──────────────────────────────────────────
+class _FarmerNavItem extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final FarmerNavTab tab;
+  final FarmerNavTab current;
+  final ValueChanged<FarmerNavTab> onTap;
+
+  const _FarmerNavItem({
+    required this.icon,
+    required this.label,
+    required this.tab,
+    required this.current,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isActive = tab == current;
+
+    return GestureDetector(
+      onTap: () => onTap(tab),
+      behavior: HitTestBehavior.opaque,
+      child: SizedBox(
+        width: 64,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AnimatedContainer(
+              duration: const Duration(milliseconds: 180),
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: isActive
+                    ? AppColors.forestGreen.withValues(alpha: 0.10)
                     : Colors.transparent,
                 borderRadius: BorderRadius.circular(10),
               ),
@@ -845,6 +912,208 @@ class CrrfScaffold extends StatelessWidget {
       // We build the nav bar ourselves via bottomNavigationBar so Flutter
       // automatically reserves space and handles safe-area insets.
       bottomNavigationBar: CrrfBottomNavBar(
+        current: currentTab,
+        onTap: (tab) => _handleTap(context, tab),
+      ),
+    );
+  }
+}
+
+// ═════════════════════════════════════════════════════════════
+//  FARMER NAVIGATION
+// ═════════════════════════════════════════════════════════════
+
+/// The five farmer nav destinations. The center [requestManure]
+/// item renders as a raised FAB-style button.
+enum FarmerNavTab { home, orders, requestManure, insights, profile }
+
+// ─────────────────────────────────────────────────────────────
+/// Persistent bottom nav bar for Farmer screens.
+/// Home | Orders | [Request Manure FAB] | Insights | Profile
+// ─────────────────────────────────────────────────────────────
+
+class FarmerBottomNavBar extends StatelessWidget {
+  final FarmerNavTab current;
+  final ValueChanged<FarmerNavTab> onTap;
+
+  const FarmerBottomNavBar({
+    super.key,
+    required this.current,
+    required this.onTap,
+  });
+
+  static const _kBarHeight = 68.0;
+  static const _kFabSize = 58.0;
+
+  @override
+  Widget build(BuildContext context) {
+    final bottomPadding = MediaQuery.of(context).padding.bottom;
+
+    return SizedBox(
+      height: _kBarHeight + bottomPadding,
+      child: Stack(
+        clipBehavior: Clip.none,
+        alignment: Alignment.bottomCenter,
+        children: [
+          // ── Bar background ─────────────────────────────────
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              height: _kBarHeight + bottomPadding,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(20),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.08),
+                    blurRadius: 16,
+                    offset: const Offset(0, -4),
+                  ),
+                ],
+              ),
+              child: Padding(
+                padding: EdgeInsets.only(bottom: bottomPadding),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _FarmerNavItem(
+                      // Changed from _NavItem to _FarmerNavItem
+                      icon: Icons.home_rounded,
+                      label: 'Home',
+                      tab: FarmerNavTab.home,
+                      current: current,
+                      onTap: onTap,
+                    ),
+                    _FarmerNavItem(
+                      // Changed from _NavItem to _FarmerNavItem
+                      icon: Icons.inventory_2_rounded,
+                      label: 'Orders',
+                      tab: FarmerNavTab.orders,
+                      current: current,
+                      onTap: onTap,
+                    ),
+
+                    // Centre spacer — FAB floats above this gap
+                    const SizedBox(width: _kFabSize + 8),
+
+                    _FarmerNavItem(
+                      // Changed from _NavItem to _FarmerNavItem
+                      icon: Icons.bar_chart_rounded,
+                      label: 'Insights',
+                      tab: FarmerNavTab.insights,
+                      current: current,
+                      onTap: onTap,
+                    ),
+                    _FarmerNavItem(
+                      // Changed from _NavItem to _FarmerNavItem
+                      icon: Icons.person_outline_rounded,
+                      label: 'Profile',
+                      tab: FarmerNavTab.profile,
+                      current: current,
+                      onTap: onTap,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+          // ── Centre raised FAB (manure/leaf themed) ──────────
+          Positioned(
+            top: -(_kFabSize / 2) + 4,
+            child: GestureDetector(
+              onTap: () => onTap(FarmerNavTab.requestManure),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 200),
+                width: _kFabSize,
+                height: _kFabSize,
+                decoration: BoxDecoration(
+                  color: const Color(0xFF388E3C),
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFF388E3C).withValues(alpha: 0.45),
+                      blurRadius: 14,
+                      spreadRadius: 1,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Center(
+                  child: Icon(
+                    Icons.eco_rounded,
+                    color: Colors.white,
+                    size: current == FarmerNavTab.requestManure ? 30 : 26,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+/// Drop-in Scaffold for all Farmer screens.
+///
+/// Example:
+/// ```dart
+/// class FarmerHomeScreen extends StatelessWidget {
+///   @override
+///   Widget build(BuildContext context) {
+///     return FarmerScaffold(
+///       currentTab: FarmerNavTab.home,
+///       body: YourFarmerHomeBody(),
+///     );
+///   }
+/// }
+/// ```
+// ─────────────────────────────────────────────────────────────
+class FarmerScaffold extends StatelessWidget {
+  final FarmerNavTab currentTab;
+  final Widget body;
+  final PreferredSizeWidget? appBar;
+
+  const FarmerScaffold({
+    super.key,
+    required this.currentTab,
+    required this.body,
+    this.appBar,
+  });
+
+  static String _routeFor(FarmerNavTab tab) {
+    switch (tab) {
+      case FarmerNavTab.home:
+        return AppRoutes.farmerHome;
+      case FarmerNavTab.orders:
+        return AppRoutes.farmerOrders;
+      case FarmerNavTab.requestManure:
+        return AppRoutes.requestManure;
+      case FarmerNavTab.insights:
+        return AppRoutes.farmerInsights;
+      case FarmerNavTab.profile:
+        return AppRoutes.profile; // shared route with household
+    }
+  }
+
+  void _handleTap(BuildContext context, FarmerNavTab tab) {
+    if (tab == currentTab) return;
+    Navigator.of(context).pushReplacementNamed(_routeFor(tab));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFFF5F7F5),
+      appBar: appBar,
+      body: body,
+      bottomNavigationBar: FarmerBottomNavBar(
         current: currentTab,
         onTap: (tab) => _handleTap(context, tab),
       ),

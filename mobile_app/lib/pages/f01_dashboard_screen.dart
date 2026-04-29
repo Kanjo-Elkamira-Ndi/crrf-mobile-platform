@@ -77,8 +77,14 @@ class _FarmerDashboardScreenState extends State<FarmerDashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
+    // ─────────────────────────────────────────────────────────
+    // CHANGE: Wrap with FarmerScaffold instead of plain Scaffold.
+    // Pass currentTab: FarmerNavTab.home so the Home icon is active.
+    // The body is exactly the same CustomScrollView as before —
+    // nothing inside it changes at all.
+    // ─────────────────────────────────────────────────────────
+    return FarmerScaffold(
+      currentTab: FarmerNavTab.home,
       body: CustomScrollView(
         slivers: [
           // ── App Bar ─────────────────────────────────────────
