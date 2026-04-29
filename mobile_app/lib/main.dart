@@ -19,7 +19,8 @@
 // import 'package:crrfapp/pages/h08_transaction_detail_screen.dart';
 // import 'package:crrfapp/pages/h09_waste_separation_guide_screen.dart';
 // import 'package:crrfapp/pages/h10_credit_rates_screen.dart';
-import 'package:crrfapp/pages/h11_impact_summary_screen.dart';
+// import 'package:crrfapp/pages/h11_impact_summary_screen.dart';
+import 'package:crrfapp/pages/h12_support_screen.dart';
 // import 'package:crrfapp/core/constants/app_constants.dart';
 import 'package:flutter/material.dart';
 
@@ -56,7 +57,8 @@ class MyApp extends StatelessWidget {
       // home: const SupportScreen(),
       // home: const WasteSeparationGuideScreen(),
       // home: const CreditRatesScreen(),
-      home: const ImpactSummaryScreen(),
+      // home: const ImpactSummaryScreen(),
+      home: const SupportScreen(),
     );
   }
 }
