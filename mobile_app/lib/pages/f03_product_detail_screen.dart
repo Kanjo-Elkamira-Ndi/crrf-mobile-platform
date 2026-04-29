@@ -87,257 +87,264 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   Widget build(BuildContext context) {
     final p = _product;
 
-    return Scaffold(
-      backgroundColor: AppColors.background,
-      body: CustomScrollView(
-        slivers: [
-          // ── Hero SliverAppBar ────────────────────────────────
-          SliverAppBar(
-            expandedHeight: 240,
-            pinned: true,
-            leading: const BackButton(color: AppColors.white),
-            backgroundColor: AppColors.forestGreen,
-            actions: [
-              IconButton(
-                icon: const Icon(
-                  Icons.shopping_cart_outlined,
-                  color: AppColors.white,
+    // Wrap with FarmerScaffold and set currentTab to FarmerNavTab.orders
+    return FarmerScaffold(
+      currentTab: FarmerNavTab.orders, // Highlights the Orders tab
+      body: Scaffold(
+        backgroundColor: AppColors.background,
+        body: CustomScrollView(
+          slivers: [
+            // ── Hero SliverAppBar ────────────────────────────────
+            SliverAppBar(
+              expandedHeight: 240,
+              pinned: true,
+              leading: const BackButton(color: AppColors.white),
+              backgroundColor: AppColors.forestGreen,
+              actions: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.shopping_cart_outlined,
+                    color: AppColors.white,
+                  ),
+                  onPressed: () =>
+                      Navigator.of(context).pushNamed(AppRoutes.cart),
                 ),
-                onPressed: () =>
-                    Navigator.of(context).pushNamed(AppRoutes.cart),
-              ),
-            ],
-            flexibleSpace: FlexibleSpaceBar(
-              collapseMode: CollapseMode.pin,
-              background: Stack(
-                children: [
-                  Container(
-                    color: AppColors.greenLighter,
-                    child: Center(
-                      child: Text(
-                        p.emoji,
-                        style: const TextStyle(fontSize: 100),
+              ],
+              flexibleSpace: FlexibleSpaceBar(
+                collapseMode: CollapseMode.pin,
+                background: Stack(
+                  children: [
+                    Container(
+                      color: AppColors.greenLighter,
+                      child: Center(
+                        child: Text(
+                          p.emoji,
+                          style: const TextStyle(fontSize: 100),
+                        ),
                       ),
                     ),
-                  ),
-                  Positioned(
-                    top: 16,
-                    right: 16,
-                    child: _StockBadge(product: p),
-                  ),
-                ],
+                    Positioned(
+                      top: 16,
+                      right: 16,
+                      child: _StockBadge(product: p),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
 
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // ── Name & unit ──────────────────────────────
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // ── Name & unit ──────────────────────────────
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(p.name, style: AppTextStyles.h2),
+                              const SizedBox(height: 4),
+                              Text(
+                                p.unitLabel,
+                                style: AppTextStyles.body.copyWith(
+                                  color: AppColors.textSecondary,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 6,
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppColors.greenLighter,
+                            borderRadius: BorderRadius.circular(
+                              AppConstants.radiusPill,
+                            ),
+                          ),
+                          child: Text(
+                            p.npkProfile,
+                            style: AppTextStyles.caption.copyWith(
+                              color: AppColors.forestGreen,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 16),
+
+                    // ── Description ──────────────────────────────
+                    Text(
+                      p.description,
+                      style: AppTextStyles.body.copyWith(
+                        color: AppColors.textSecondary,
+                        height: 1.65,
+                      ),
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    // ── Benefits ─────────────────────────────────
+                    Text('Key Benefits', style: AppTextStyles.h4),
+                    const SizedBox(height: 10),
+                    ...p.benefits.map(
+                      (b) => Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4),
+                        child: Row(
                           children: [
-                            Text(p.name, style: AppTextStyles.h2),
-                            const SizedBox(height: 4),
-                            Text(
-                              p.unitLabel,
-                              style: AppTextStyles.body.copyWith(
-                                color: AppColors.textSecondary,
+                            Container(
+                              width: 20,
+                              height: 20,
+                              decoration: const BoxDecoration(
+                                color: AppColors.successLight,
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Icons.check_rounded,
+                                color: AppColors.successGreen,
+                                size: 13,
                               ),
                             ),
+                            const SizedBox(width: 10),
+                            Text(b, style: AppTextStyles.bodySmall),
                           ],
                         ),
                       ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 6,
-                        ),
-                        decoration: BoxDecoration(
-                          color: AppColors.greenLighter,
-                          borderRadius: BorderRadius.circular(
-                            AppConstants.radiusPill,
-                          ),
-                        ),
-                        child: Text(
-                          p.npkProfile,
-                          style: AppTextStyles.caption.copyWith(
-                            color: AppColors.forestGreen,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 16),
-
-                  // ── Description ──────────────────────────────
-                  Text(
-                    p.description,
-                    style: AppTextStyles.body.copyWith(
-                      color: AppColors.textSecondary,
-                      height: 1.65,
                     ),
-                  ),
 
-                  const SizedBox(height: 20),
+                    const SizedBox(height: 24),
 
-                  // ── Benefits ─────────────────────────────────
-                  Text('Key Benefits', style: AppTextStyles.h4),
-                  const SizedBox(height: 10),
-                  ...p.benefits.map(
-                    (b) => Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 4),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 20,
-                            height: 20,
-                            decoration: const BoxDecoration(
-                              color: AppColors.successLight,
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Icon(
-                              Icons.check_rounded,
-                              color: AppColors.successGreen,
-                              size: 13,
-                            ),
+                    // ── Payment method toggle ────────────────────
+                    Text('Payment Method', style: AppTextStyles.h4),
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        _PaymentToggle(
+                          label: 'CRF Credits',
+                          icon: Icons.stars_rounded,
+                          value: 'credits',
+                          selected: _paymentMethod,
+                          onTap: () =>
+                              setState(() => _paymentMethod = 'credits'),
+                          color: AppColors.forestGreen,
+                          bg: AppColors.greenLighter,
+                        ),
+                        const SizedBox(width: 10),
+                        _PaymentToggle(
+                          label: 'Cash on Delivery',
+                          icon: Icons.payments_outlined,
+                          value: 'cash',
+                          selected: _paymentMethod,
+                          onTap: () => setState(() => _paymentMethod = 'cash'),
+                          color: AppColors.earthBrown,
+                          bg: AppColors.brownLighter,
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 20),
+
+                    // ── Price display ─────────────────────────────
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: AppColors.white,
+                        borderRadius: BorderRadius.circular(
+                          AppConstants.radiusL,
+                        ),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: AppColors.shadow,
+                            blurRadius: 6,
+                            offset: Offset(0, 2),
                           ),
-                          const SizedBox(width: 10),
-                          Text(b, style: AppTextStyles.bodySmall),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Unit price',
+                                style: AppTextStyles.bodySmall.copyWith(
+                                  color: AppColors.textSecondary,
+                                ),
+                              ),
+                              Text(
+                                _paymentMethod == 'credits'
+                                    ? '${p.creditPrice} pts'
+                                    : 'XAF ${p.cashPriceXaf.toStringAsFixed(0)}',
+                                style: AppTextStyles.bodySmall.copyWith(
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 14),
+
+                          // Quantity stepper
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Quantity',
+                                style: AppTextStyles.bodySmall.copyWith(
+                                  color: AppColors.textSecondary,
+                                ),
+                              ),
+                              _QuantityStepper(
+                                value: _quantity,
+                                max: p.stockQty > 0 ? p.stockQty : 0,
+                                onChanged: (v) => setState(() => _quantity = v),
+                              ),
+                            ],
+                          ),
+                          const Divider(height: 20),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('Total', style: AppTextStyles.h4),
+                              Text(
+                                _paymentMethod == 'credits'
+                                    ? '$_totalCredits pts'
+                                    : 'XAF ${_totalCash.toStringAsFixed(0)}',
+                                style: AppTextStyles.h3.copyWith(
+                                  color: AppColors.forestGreen,
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),
-                  ),
 
-                  const SizedBox(height: 24),
-
-                  // ── Payment method toggle ────────────────────
-                  Text('Payment Method', style: AppTextStyles.h4),
-                  const SizedBox(height: 10),
-                  Row(
-                    children: [
-                      _PaymentToggle(
-                        label: 'CRF Credits',
-                        icon: Icons.stars_rounded,
-                        value: 'credits',
-                        selected: _paymentMethod,
-                        onTap: () => setState(() => _paymentMethod = 'credits'),
-                        color: AppColors.forestGreen,
-                        bg: AppColors.greenLighter,
-                      ),
-                      const SizedBox(width: 10),
-                      _PaymentToggle(
-                        label: 'Cash on Delivery',
-                        icon: Icons.payments_outlined,
-                        value: 'cash',
-                        selected: _paymentMethod,
-                        onTap: () => setState(() => _paymentMethod = 'cash'),
-                        color: AppColors.earthBrown,
-                        bg: AppColors.brownLighter,
-                      ),
-                    ],
-                  ),
-
-                  const SizedBox(height: 20),
-
-                  // ── Price display ─────────────────────────────
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.circular(AppConstants.radiusL),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: AppColors.shadow,
-                          blurRadius: 6,
-                          offset: Offset(0, 2),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Unit price',
-                              style: AppTextStyles.bodySmall.copyWith(
-                                color: AppColors.textSecondary,
-                              ),
-                            ),
-                            Text(
-                              _paymentMethod == 'credits'
-                                  ? '${p.creditPrice} pts'
-                                  : 'XAF ${p.cashPriceXaf.toStringAsFixed(0)}',
-                              style: AppTextStyles.bodySmall.copyWith(
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 14),
-
-                        // Quantity stepper
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Quantity',
-                              style: AppTextStyles.bodySmall.copyWith(
-                                color: AppColors.textSecondary,
-                              ),
-                            ),
-                            _QuantityStepper(
-                              value: _quantity,
-                              max: p.stockQty > 0 ? p.stockQty : 0,
-                              onChanged: (v) => setState(() => _quantity = v),
-                            ),
-                          ],
-                        ),
-                        const Divider(height: 20),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Total', style: AppTextStyles.h4),
-                            Text(
-                              _paymentMethod == 'credits'
-                                  ? '$_totalCredits pts'
-                                  : 'XAF ${_totalCash.toStringAsFixed(0)}',
-                              style: AppTextStyles.h3.copyWith(
-                                color: AppColors.forestGreen,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  const SizedBox(height: 32),
-                ],
+                    const SizedBox(height: 32),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
-      ),
+          ],
+        ),
 
-      // ── Sticky bottom CTA ────────────────────────────────────
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.fromLTRB(20, 12, 20, 28),
-        color: AppColors.white,
-        child: CrrfPrimaryButton(
-          label: p.isOutOfStock ? 'Out of Stock' : 'Add to Cart',
-          onPressed: p.isOutOfStock ? null : _addToCart,
-          leadingIcon: Icons.shopping_cart_rounded,
+        // ── Sticky bottom CTA ────────────────────────────────────
+        bottomNavigationBar: Container(
+          padding: const EdgeInsets.fromLTRB(20, 12, 20, 28),
+          color: AppColors.white,
+          child: CrrfPrimaryButton(
+            label: p.isOutOfStock ? 'Out of Stock' : 'Add to Cart',
+            onPressed: p.isOutOfStock ? null : _addToCart,
+            leadingIcon: Icons.shopping_cart_rounded,
+          ),
         ),
       ),
     );
