@@ -22,7 +22,8 @@
 // import 'package:crrfapp/pages/h11_impact_summary_screen.dart';
 // import 'package:crrfapp/pages/h12_support_screen.dart';
 // import 'package:crrfapp/pages/f01_dashboard_screen.dart';
-import 'package:crrfapp/pages/f02_marketplace_catalog_screen.dart';
+// import 'package:crrfapp/pages/f02_marketplace_catalog_screen.dart';
+import 'package:crrfapp/pages/f03_product_detail_screen.dart';
 // import 'package:crrfapp/pages/f02_f03_catalog_product_screens.dart';
 // import 'package:crrfapp/core/constants/app_constants.dart';
 import 'package:flutter/material.dart';
@@ -64,7 +65,8 @@ class MyApp extends StatelessWidget {
       // home: const SupportScreen(),
       // home: const FarmerDashboardScreen(),
       // home: const ProductDetailScreen(productId: "123"),
-      home: const MarketplaceCatalogScreen(),
+      // home: const MarketplaceCatalogScreen(),
+      home: const ProductDetailScreen(productId: "123"),
     );
   }
 }
