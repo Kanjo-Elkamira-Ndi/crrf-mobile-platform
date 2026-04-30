@@ -27,10 +27,9 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
 
   void _onContinue() {
     if (_selected == null) return;
-    Navigator.of(context).pushNamed(
-      AppRoutes.register,
-      arguments: {'role': _selected},
-    );
+    Navigator.of(
+      context,
+    ).pushNamed(AppRoutes.register, arguments: {'role': _selected});
   }
 
   static const _roles = <_RoleItem>[

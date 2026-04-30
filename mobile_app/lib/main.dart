@@ -1,45 +1,41 @@
-// import 'package:crrfapp/core/constants/app_constants.dart';
-// import 'package:crrfapp/pages/onboarding_screen.dart';
-// import 'package:crrfapp/core/constants/app_constants.dart';
-// import 'package:crrfapp/pages/register_screen.dart';
-// import 'package:crrfapp/pages/splash_screen.dart';
-// import 'package:crrfapp/pages/role_selection_screen.dart';
-// import 'package:crrfapp/pages/otp_verification_screen.dart';
-// import 'package:crrfapp/pages/login_screen.dart';
-// import 'package:crrfapp/pages/forgot_password_screen.dart';
-// import 'package:crrfapp/pages/notifications_screen.dart';
-// import 'package:crrfapp/pages/h01_dashboard_screen.dart';
-// import 'package:crrfapp/pages/h02_schedule_pickup_screen.dart';
-// import 'package:crrfapp/pages/h03_pickup_confirmation_screen.dart';
-// import 'package:crrfapp/pages/h04_pickup_history_screen.dart';
-// import 'package:crrfapp/pages/h04_pickup_history_screen.dart';
-// import 'package:crrfapp/pages/h05_pickup_detail_screen.dart';
-// import 'package:crrfapp/pages/h06_cancel_pickup_sheet.dart';
-// import 'package:crrfapp/pages/h07_voucher_wallet_screen.dart';
-// import 'package:crrfapp/pages/h08_transaction_detail_screen.dart';
-// import 'package:crrfapp/pages/h09_waste_separation_guide_screen.dart';
-// import 'package:crrfapp/pages/h10_credit_rates_screen.dart';
-// import 'package:crrfapp/pages/h11_impact_summary_screen.dart';
-// import 'package:crrfapp/pages/h12_support_screen.dart';
-// import 'package:crrfapp/pages/f01_dashboard_screen.dart';
-// import 'package:crrfapp/pages/f02_marketplace_catalog_screen.dart';
-// import 'package:crrfapp/pages/f03_product_detail_screen.dart';
-// import 'package:crrfapp/pages/f04_f05_f06_checkout_screens.dart';
-// import 'package:crrfapp/pages/f04_cart_screen.dart';
-// import 'package:crrfapp/pages/f05_delivery_details_screen.dart';
-// import 'package:crrfapp/pages/f06_order_confirmation_screen.dart';
-// import 'package:crrfapp/pages/f07_order_history_screen.dart';
-// import 'package:crrfapp/pages/f08_order_detail_screen.dart';
-// import 'package:crrfapp/pages/f09_micro_loan_info_screen.dart';
-// import 'package:crrfapp/pages/d01_driver_shell_dashboard.dart';
-// import 'package:crrfapp/pages/d02_daily_route_screen.dart';
-// import 'package:crrfapp/pages/d03_pickup_task_screen.dart';
-// import 'package:crrfapp/pages/d04_confirm_pickup_screen.dart';
-// import 'package:crrfapp/pages/d05_confirm_success_screen.dart';
-// import 'package:crrfapp/pages/d06_report_issue_screen.dart';
-import 'package:crrfapp/pages/d07_history_screen.dart';
-// import 'package:crrfapp/core/constants/app_constants.dart';
 import 'package:flutter/material.dart';
+import 'package:crrfapp/core/constants/app_constants.dart';
+import 'package:crrfapp/pages/splash_screen.dart';
+import 'package:crrfapp/pages/onboarding_screen.dart';
+import 'package:crrfapp/pages/role_selection_screen.dart';
+import 'package:crrfapp/pages/register_screen.dart';
+import 'package:crrfapp/pages/otp_verification_screen.dart';
+import 'package:crrfapp/pages/login_screen.dart';
+import 'package:crrfapp/pages/forgot_password_screen.dart';
+import 'package:crrfapp/pages/h01_dashboard_screen.dart';
+import 'package:crrfapp/pages/h02_schedule_pickup_screen.dart';
+import 'package:crrfapp/pages/h03_pickup_confirmation_screen.dart';
+import 'package:crrfapp/pages/h04_pickup_history_screen.dart';
+import 'package:crrfapp/pages/h05_pickup_detail_screen.dart';
+import 'package:crrfapp/pages/h07_voucher_wallet_screen.dart';
+import 'package:crrfapp/pages/h08_transaction_detail_screen.dart';
+import 'package:crrfapp/pages/h09_waste_separation_guide_screen.dart';
+import 'package:crrfapp/pages/h10_credit_rates_screen.dart';
+import 'package:crrfapp/pages/h11_impact_summary_screen.dart';
+import 'package:crrfapp/pages/h12_support_screen.dart';
+import 'package:crrfapp/pages/f01_dashboard_screen.dart';
+import 'package:crrfapp/pages/f02_marketplace_catalog_screen.dart';
+import 'package:crrfapp/pages/f03_product_detail_screen.dart';
+import 'package:crrfapp/pages/f04_cart_screen.dart';
+import 'package:crrfapp/pages/f05_delivery_details_screen.dart';
+import 'package:crrfapp/pages/f06_order_confirmation_screen.dart';
+import 'package:crrfapp/pages/f07_order_history_screen.dart';
+import 'package:crrfapp/pages/f08_order_detail_screen.dart';
+import 'package:crrfapp/pages/f09_micro_loan_info_screen.dart';
+import 'package:crrfapp/pages/d01_driver_shell_dashboard.dart';
+import 'package:crrfapp/pages/d02_daily_route_screen.dart';
+import 'package:crrfapp/pages/d03_pickup_task_screen.dart';
+import 'package:crrfapp/pages/d04_confirm_pickup_screen.dart';
+import 'package:crrfapp/pages/d05_confirm_success_screen.dart';
+import 'package:crrfapp/pages/d06_report_issue_screen.dart';
+import 'package:crrfapp/pages/d07_history_screen.dart';
+import 'package:crrfapp/pages/notifications_screen.dart';
+import 'package:crrfapp/pages/profile_settings_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -48,138 +44,212 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'CRRF Mobile App',
-      // home: const SplashScreen(),
-      // home: const OnboardingScreen(),
-      // home: const RoleSelectionScreen(),
-      // home: const RegisterScreen(role: UserRole.farmer),
-      // home: const OtpVerificationScreen(
-      //   phone: '+2348140123456',
-      //   role: UserRole.farmer,
-      // ),
-      // home: const LoginScreen(),
-      // home: const ForgotPasswordScreen(),
-      // home: const ProfileSettingsScreen(),
-      // home: const HouseholdDashboardScreen(),
-      // home: const SchedulePickupScreen(),
-      // home: const PickupConfirmationScreen(),
-      // home: const CancelPickupSheet(refNumber: "123"),
-      // home: const PickupHistoryScreen(),
-      // home: const TransactionDetailScreen(txId: "124"),
-      // home: const VoucherWalletScreen(),
-      // home: const SupportScreen(),
-      // home: const WasteSeparationGuideScreen(),
-      // home: const CreditRatesScreen(),
-      // home: const ImpactSummaryScreen(),
-      // home: const SupportScreen(),
-      // home: const FarmerDashboardScreen(),
-      // home: const ProductDetailScreen(productId: "123"),
-      // home: const MarketplaceCatalogScreen(),
-      // home: const ProductDetailScreen(productId: "123"),
-      // home: const CartScreen(),
-      // home: const DeliveryDetailsScreen(),
-      // home: const OrderConfirmationScreen(),
-      // home: const OrderDetailScreen(orderId: "123"),
-      // home: const OrderHistoryScreen(),
-      // home: const MicroLoanInfoScreen(),
-      // home: const DriverDashboardScreen(),
-      // home: const DailyRouteScreen(),
-      // home: const PickupTaskScreen(pickupId: "123"),
-      // home: const ConfirmPickupScreen(taskId: "123"),
-      // home: ConfirmSuccessScreen.demo(),
-      // home: const ReportIssueScreen(taskId: "123"),
-      home: const DriverHistoryListScreen(),
+      initialRoute: AppRoutes.splash,
+      onGenerateRoute: _onGenerateRoute,
     );
   }
-}
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  Route<dynamic>? _onGenerateRoute(RouteSettings settings) {
+    final args = settings.arguments;
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
+    switch (settings.name) {
+      // ─── Auth & Onboarding Routes ─────────────────────────────
+      case AppRoutes.splash:
+        return MaterialPageRoute(builder: (_) => const SplashScreen());
 
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
+      case AppRoutes.onboarding:
+        return MaterialPageRoute(builder: (_) => const OnboardingScreen());
 
-  final String title;
+      case AppRoutes.roleSelection:
+        return MaterialPageRoute(builder: (_) => const RoleSelectionScreen());
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
+      case AppRoutes.register:
+        if (args is Map && args.containsKey('role')) {
+          return MaterialPageRoute(
+            builder: (_) => RegisterScreen(role: args['role']),
+          );
+        }
+        return MaterialPageRoute(builder: (_) => const RoleSelectionScreen());
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+      case AppRoutes.otpVerification:
+        if (args is Map &&
+            args.containsKey('role') &&
+            args.containsKey('phone')) {
+          return MaterialPageRoute(
+            builder: (_) =>
+                OtpVerificationScreen(role: args['role'], phone: args['phone']),
+          );
+        }
+        return MaterialPageRoute(builder: (_) => const RoleSelectionScreen());
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+      case AppRoutes.login:
+        return MaterialPageRoute(builder: (_) => const LoginScreen());
 
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: .center,
-          children: [
-            const Text('You have pushed the button this many times:'),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+      case AppRoutes.forgotPassword:
+        return MaterialPageRoute(builder: (_) => const ForgotPasswordScreen());
+
+      case AppRoutes.notifications:
+        return MaterialPageRoute(builder: (_) => const NotificationsScreen());
+
+      case AppRoutes.profile:
+        return MaterialPageRoute(builder: (_) => const ProfileSettingsScreen());
+
+      // ─── Household Routes (H-01 to H-12) ──────────────────────
+      case AppRoutes.householdHome:
+        return MaterialPageRoute(
+          builder: (_) => const HouseholdDashboardScreen(),
+        );
+
+      case AppRoutes.schedulePickup:
+        return MaterialPageRoute(builder: (_) => const SchedulePickupScreen());
+
+      case AppRoutes.pickupConfirmation:
+        return MaterialPageRoute(
+          builder: (_) => const PickupConfirmationScreen(),
+        );
+
+      case AppRoutes.pickupHistory:
+        return MaterialPageRoute(builder: (_) => const PickupHistoryScreen());
+
+      case AppRoutes.pickupDetail:
+        if (args is Map && args.containsKey('refNumber')) {
+          return MaterialPageRoute(
+            builder: (_) => PickupDetailScreen(refNumber: args['refNumber']),
+          );
+        }
+        return MaterialPageRoute(builder: (_) => const PickupHistoryScreen());
+
+      case AppRoutes.voucher:
+        return MaterialPageRoute(builder: (_) => const VoucherWalletScreen());
+
+      case AppRoutes.transactionDetail:
+        if (args is Map && args.containsKey('txId')) {
+          return MaterialPageRoute(
+            builder: (_) => TransactionDetailScreen(txId: args['txId']),
+          );
+        }
+        return MaterialPageRoute(builder: (_) => const VoucherWalletScreen());
+
+      case AppRoutes.wasteGuide:
+        return MaterialPageRoute(
+          builder: (_) => const WasteSeparationGuideScreen(),
+        );
+
+      case AppRoutes.creditRates:
+        return MaterialPageRoute(builder: (_) => const CreditRatesScreen());
+
+      case AppRoutes.impactSummary:
+        return MaterialPageRoute(builder: (_) => const ImpactSummaryScreen());
+
+      case AppRoutes.support:
+        return MaterialPageRoute(builder: (_) => const SupportScreen());
+
+      // ─── Farmer Routes (F-01 to F-09) ─────────────────────────
+      case AppRoutes.farmerHome:
+        return MaterialPageRoute(builder: (_) => const FarmerDashboardScreen());
+
+      case AppRoutes.marketplace:
+        return MaterialPageRoute(
+          builder: (_) => const MarketplaceCatalogScreen(),
+        );
+
+      case AppRoutes.productDetail:
+        if (args is Map && args.containsKey('productId')) {
+          return MaterialPageRoute(
+            builder: (_) => ProductDetailScreen(productId: args['productId']),
+          );
+        }
+        return MaterialPageRoute(
+          builder: (_) => const MarketplaceCatalogScreen(),
+        );
+
+      case AppRoutes.cart:
+        return MaterialPageRoute(builder: (_) => const CartScreen());
+
+      case AppRoutes.deliveryDetails:
+        return MaterialPageRoute(builder: (_) => const DeliveryDetailsScreen());
+
+      case AppRoutes.orderConfirmation:
+        return MaterialPageRoute(
+          builder: (_) => const OrderConfirmationScreen(),
+        );
+
+      case AppRoutes.orderHistory:
+        return MaterialPageRoute(builder: (_) => const OrderHistoryScreen());
+
+      case AppRoutes.orderDetail:
+        if (args is Map && args.containsKey('orderId')) {
+          return MaterialPageRoute(
+            builder: (_) => OrderDetailScreen(orderId: args['orderId']),
+          );
+        }
+        return MaterialPageRoute(builder: (_) => const OrderHistoryScreen());
+
+      case AppRoutes.microLoanInfo:
+        return MaterialPageRoute(builder: (_) => const MicroLoanInfoScreen());
+
+      // ─── Driver Routes (D-01 to D-07) ─────────────────────────
+      case AppRoutes.driverHome:
+        return MaterialPageRoute(builder: (_) => const DriverDashboardScreen());
+
+      case AppRoutes.dailyRoute:
+        return MaterialPageRoute(builder: (_) => const DailyRouteScreen());
+
+      case AppRoutes.pickupTask:
+        if (args is Map && args.containsKey('pickupId')) {
+          return MaterialPageRoute(
+            builder: (_) => PickupTaskScreen(pickupId: args['pickupId']),
+          );
+        }
+        return MaterialPageRoute(builder: (_) => const DailyRouteScreen());
+
+      case AppRoutes.confirmPickup:
+        if (args is Map && args.containsKey('taskId')) {
+          return MaterialPageRoute(
+            builder: (_) => ConfirmPickupScreen(taskId: args['taskId']),
+          );
+        }
+        return MaterialPageRoute(builder: (_) => const DailyRouteScreen());
+
+      case AppRoutes.confirmSuccess:
+        if (args is Map &&
+            args.containsKey('taskId') &&
+            args.containsKey('plasticKg') &&
+            args.containsKey('organicKg') &&
+            args.containsKey('totalCredits') &&
+            args.containsKey('householdName')) {
+          return MaterialPageRoute(
+            builder: (_) => ConfirmSuccessScreen(
+              taskId: args['taskId'],
+              plasticKg: args['plasticKg'],
+              organicKg: args['organicKg'],
+              totalCredits: args['totalCredits'],
+              householdName: args['householdName'],
             ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
-    );
+          );
+        }
+        return MaterialPageRoute(builder: (_) => const DailyRouteScreen());
+
+      case AppRoutes.reportIssue:
+        if (args is Map && args.containsKey('taskId')) {
+          return MaterialPageRoute(
+            builder: (_) => ReportIssueScreen(taskId: args['taskId']),
+          );
+        }
+        return MaterialPageRoute(builder: (_) => const DailyRouteScreen());
+
+      case AppRoutes.driverHistory:
+        return MaterialPageRoute(
+          builder: (_) => const DriverHistoryListScreen(),
+        );
+
+      default:
+        return MaterialPageRoute(builder: (_) => const SplashScreen());
+    }
   }
 }
