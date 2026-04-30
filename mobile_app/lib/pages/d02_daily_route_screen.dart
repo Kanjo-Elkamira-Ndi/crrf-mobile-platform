@@ -5,6 +5,77 @@ import '../../../core/constants/app_constants.dart';
 import '../../../widgets/common_widgets.dart';
 
 // ═════════════════════════════════════════════════════════════
+// SHARED MODELS (exported for use in other screens)
+// ═════════════════════════════════════════════════════════════
+
+/// Pickup task model - shared across driver screens
+class PickupTask {
+  final String id;
+  final String householdName;
+  final String address;
+  final String timeWindow;
+  final List<String> wasteTypes;
+  final PickupStatus status;
+  final String distance;
+  final int sequenceNumber;
+
+  const PickupTask({
+    required this.id,
+    required this.householdName,
+    required this.address,
+    required this.timeWindow,
+    required this.wasteTypes,
+    required this.status,
+    required this.distance,
+    required this.sequenceNumber,
+  });
+}
+
+// Demo data for development
+const List<PickupTask> kDemoTasks = [
+  PickupTask(
+    id: 'P-001',
+    householdName: 'Ama Mbarga',
+    address: 'Quartier Bastos, Yaounde',
+    timeWindow: '7:00 – 10:00 AM',
+    wasteTypes: ['Plastic', 'Organic'],
+    status: PickupStatus.pending,
+    distance: '1.2 km',
+    sequenceNumber: 1,
+  ),
+  PickupTask(
+    id: 'P-002',
+    householdName: 'Jean Nkolo',
+    address: 'Quartier Mvog-Mbi, Yaounde',
+    timeWindow: '10:30 AM – 1:00 PM',
+    wasteTypes: ['Glass', 'Organic'],
+    status: PickupStatus.pending,
+    distance: '2.5 km',
+    sequenceNumber: 2,
+  ),
+  PickupTask(
+    id: 'P-003',
+    householdName: 'Claire Bikono',
+    address: 'Quartier Mokolo, Yaounde',
+    timeWindow: '2:00 – 5:00 PM',
+    wasteTypes: ['Plastic', 'Paper'],
+    status: PickupStatus.pending,
+    distance: '3.8 km',
+    sequenceNumber: 3,
+  ),
+  PickupTask(
+    id: 'P-004',
+    householdName: 'Paul Essomba',
+    address: 'Quartier Etoudi, Yaounde',
+    timeWindow: '5:30 – 7:00 PM',
+    wasteTypes: ['Organic', 'E-waste'],
+    status: PickupStatus.pending,
+    distance: '4.2 km',
+    sequenceNumber: 4,
+  ),
+];
+
+// ═════════════════════════════════════════════════════════════
 // D-02 — Daily Route Screen
 // ═════════════════════════════════════════════════════════════
 /// Shows the driver's full list of pickups for today.
@@ -15,46 +86,6 @@ class DailyRouteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Replace with DriverBloc data
-    final List<_PickupTask> _pickups = [
-      _PickupTask(
-        id: 'P-001',
-        householdName: 'Ama Mbarga',
-        address: 'Quartier Bastos, Yaounde',
-        timeWindow: '7:00 – 10:00 AM',
-        wasteTypes: ['Plastic', 'Organic'],
-        status: PickupStatus.pending,
-        distance: '1.2 km',
-      ),
-      _PickupTask(
-        id: 'P-002',
-        householdName: 'Jean Nkolo',
-        address: 'Quartier Mvog-Mbi, Yaounde',
-        timeWindow: '10:30 AM – 1:00 PM',
-        wasteTypes: ['Glass', 'Organic'],
-        status: PickupStatus.pending,
-        distance: '2.5 km',
-      ),
-      _PickupTask(
-        id: 'P-003',
-        householdName: 'Claire Bikono',
-        address: 'Quartier Mokolo, Yaounde',
-        timeWindow: '2:00 – 5:00 PM',
-        wasteTypes: ['Plastic', 'Paper'],
-        status: PickupStatus.pending,
-        distance: '3.8 km',
-      ),
-      _PickupTask(
-        id: 'P-004',
-        householdName: 'Paul Essomba',
-        address: 'Quartier Etoudi, Yaounde',
-        timeWindow: '5:30 – 7:00 PM',
-        wasteTypes: ['Organic', 'E-waste'],
-        status: PickupStatus.pending,
-        distance: '4.2 km',
-      ),
-    ];
-
     return DriverScaffold(
       currentTab: DriverNavTab.myRoute,
       body: Scaffold(
@@ -92,7 +123,7 @@ class DailyRouteScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   _RouteStat(
-                    value: '${_pickups.length}',
+                    value: '${kDemoTasks.length}',
                     label: 'Pickups',
                     icon: Icons.inventory_2_rounded,
                   ),
@@ -118,13 +149,13 @@ class DailyRouteScreen extends StatelessWidget {
             Expanded(
               child: ListView.separated(
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 28),
-                itemCount: _pickups.length,
+                itemCount: kDemoTasks.length,
                 separatorBuilder: (_, __) => const SizedBox(height: 12),
                 itemBuilder: (_, i) => _PickupCard(
-                  pickup: _pickups[i],
+                  pickup: kDemoTasks[i],
                   onTap: () => Navigator.of(context).pushNamed(
                     AppRoutes.pickupTask,
-                    arguments: {'pickupId': _pickups[i].id},
+                    arguments: {'pickupId': kDemoTasks[i].id},
                   ),
                 ),
               ),
@@ -134,23 +165,6 @@ class DailyRouteScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-// ─── Pickup task model ────────────────────────────────────────
-class _PickupTask {
-  final String id, householdName, address, timeWindow, distance;
-  final List<String> wasteTypes;
-  final PickupStatus status;
-
-  const _PickupTask({
-    required this.id,
-    required this.householdName,
-    required this.address,
-    required this.timeWindow,
-    required this.wasteTypes,
-    required this.status,
-    required this.distance,
-  });
 }
 
 // ─── Route stat widget ────────────────────────────────────────
@@ -181,7 +195,7 @@ class _RouteStat extends StatelessWidget {
 
 // ─── Pickup card ──────────────────────────────────────────────
 class _PickupCard extends StatelessWidget {
-  final _PickupTask pickup;
+  final PickupTask pickup;
   final VoidCallback onTap;
   const _PickupCard({required this.pickup, required this.onTap});
 
