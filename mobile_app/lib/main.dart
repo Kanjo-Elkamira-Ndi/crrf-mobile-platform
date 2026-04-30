@@ -12,6 +12,7 @@ import 'package:crrfapp/pages/h02_schedule_pickup_screen.dart';
 import 'package:crrfapp/pages/h03_pickup_confirmation_screen.dart';
 import 'package:crrfapp/pages/h04_pickup_history_screen.dart';
 import 'package:crrfapp/pages/h05_pickup_detail_screen.dart';
+import 'package:crrfapp/pages/h06_cancel_pickup_sheet.dart';
 import 'package:crrfapp/pages/h07_voucher_wallet_screen.dart';
 import 'package:crrfapp/pages/h08_transaction_detail_screen.dart';
 import 'package:crrfapp/pages/h09_waste_separation_guide_screen.dart';
@@ -49,7 +50,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'CRRF Mobile App',
-      initialRoute: AppRoutes.splash,
+      home: const SplashScreen(),
       onGenerateRoute: _onGenerateRoute,
     );
   }
@@ -148,6 +149,14 @@ class MyApp extends StatelessWidget {
 
       case AppRoutes.support:
         return MaterialPageRoute(builder: (_) => const SupportScreen());
+
+      case AppRoutes.cancelPickup:
+        if (args is Map && args.containsKey('ref')) {
+          return MaterialPageRoute(
+            builder: (_) => CancelPickupSheet(refNumber: args['ref']),
+          );
+        }
+        return MaterialPageRoute(builder: (_) => const PickupHistoryScreen());
 
       // ─── Farmer Routes (F-01 to F-09) ─────────────────────────
       case AppRoutes.farmerHome:
