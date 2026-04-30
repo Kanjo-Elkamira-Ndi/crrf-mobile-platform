@@ -35,7 +35,8 @@
 // import 'package:crrfapp/pages/d02_daily_route_screen.dart';
 // import 'package:crrfapp/pages/d03_pickup_task_screen.dart';
 // import 'package:crrfapp/pages/d04_confirm_pickup_screen.dart';
-import 'package:crrfapp/pages/d05_confirm_success_screen.dart';
+// import 'package:crrfapp/pages/d05_confirm_success_screen.dart';
+import 'package:crrfapp/pages/d06_report_issue_screen.dart';
 // import 'package:crrfapp/core/constants/app_constants.dart';
 import 'package:flutter/material.dart';
 
@@ -89,8 +90,8 @@ class MyApp extends StatelessWidget {
       // home: const DailyRouteScreen(),
       // home: const PickupTaskScreen(pickupId: "123"),
       // home: const ConfirmPickupScreen(taskId: "123"),
-      home: ConfirmSuccessScreen.demo(),
-      // home: const ReportIssueScreen(taskId: "123"),
+      // home: ConfirmSuccessScreen.demo(),
+      home: const ReportIssueScreen(taskId: "123"),
     );
   }
 }
