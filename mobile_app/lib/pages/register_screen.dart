@@ -62,9 +62,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            'Please accept the Terms & Conditions.',
+            'Please accept the Terms & Conditions to continue.',
             style: AppTextStyles.bodySmall,
           ),
+          backgroundColor: AppColors.errorRed,
         ),
       );
       return;
@@ -302,37 +303,73 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
               const SizedBox(height: 20),
 
-              // Terms
-              Center(
-                child: Text.rich(
-                  TextSpan(
-                    text: 'By continuing, you agree to our ',
-                    style: AppTextStyles.caption.copyWith(
-                      color: AppColors.textSecondary,
+              // ── Terms and Conditions Checkbox (NEW) ─────────────
+              GestureDetector(
+                onTap: () {
+                  setState(() => _agreedToTerms = !_agreedToTerms);
+                },
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AnimatedContainer(
+                      duration: const Duration(milliseconds: 180),
+                      width: 22,
+                      height: 22,
+                      decoration: BoxDecoration(
+                        color: _agreedToTerms
+                            ? AppColors.forestGreen
+                            : Colors.white,
+                        borderRadius: BorderRadius.circular(6),
+                        border: Border.all(
+                          color: _agreedToTerms
+                              ? AppColors.forestGreen
+                              : AppColors.borderLight,
+                          width: 2,
+                        ),
+                      ),
+                      child: _agreedToTerms
+                          ? const Icon(
+                              Icons.check_rounded,
+                              color: Colors.white,
+                              size: 16,
+                            )
+                          : null,
                     ),
-                    children: [
-                      TextSpan(
-                        text: 'Terms and Conditions',
-                        style: AppTextStyles.caption.copyWith(
-                          color: AppColors.forestGreen,
-                          fontWeight: FontWeight.w500,
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text.rich(
+                        TextSpan(
+                          text: 'I agree to the ',
+                          style: AppTextStyles.caption.copyWith(
+                            color: AppColors.textSecondary,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: 'Terms and Conditions',
+                              style: AppTextStyles.caption.copyWith(
+                                color: AppColors.forestGreen,
+                                fontWeight: FontWeight.w600,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                            const TextSpan(text: ' and '),
+                            TextSpan(
+                              text: 'Privacy Policy',
+                              style: AppTextStyles.caption.copyWith(
+                                color: AppColors.forestGreen,
+                                fontWeight: FontWeight.w600,
+                                decoration: TextDecoration.underline,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      const TextSpan(text: ',\nand '),
-                      TextSpan(
-                        text: 'Privacy Policies',
-                        style: AppTextStyles.caption.copyWith(
-                          color: AppColors.forestGreen,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                  textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
               ),
 
-              const SizedBox(height: 20),
+              const SizedBox(height: 16),
 
               // Login link
               Center(
