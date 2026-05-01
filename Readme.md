@@ -576,7 +576,7 @@ firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.ap
 
 ## 🤝 Contributing
 
-This project is developed under the **DigiMark Consulting** banner for the CRRF initiative.
+This project is developed under the **Alchemy Codes** banner for the CRRF initiative.
 
 ```bash
 # Branching convention
