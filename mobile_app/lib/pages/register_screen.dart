@@ -74,9 +74,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
     await Future.delayed(const Duration(seconds: 1));
     if (mounted) {
       setState(() => _isLoading = false);
-      Navigator.of(
-        context,
-      ).pushNamed(AppRoutes.otpVerification, arguments: {'role': widget.role});
+
+      // FIX: Pass both role AND email/phone to OTP verification
+      Navigator.of(context).pushNamed(
+        AppRoutes.otpVerification,
+        arguments: {
+          'role': widget.role,
+          'phone': _emailController.text, // Use email as identifier for OTP
+        },
+      );
     }
   }
 
