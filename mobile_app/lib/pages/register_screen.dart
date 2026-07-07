@@ -163,10 +163,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   textInputAction: TextInputAction.next,
                   validator: (v) {
-                    if (v == null || v.trim().isEmpty)
+                    if (v == null || v.trim().isEmpty) {
                       return 'Name is required';
-                    if (v.trim().split(' ').length < 2)
+                    }
+                    if (v.trim().split(' ').length < 2) {
                       return 'Enter full name';
+                    }
                     return null;
                   },
                 ),
@@ -187,8 +189,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   textInputAction: TextInputAction.next,
                   validator: (v) {
-                    if (v == null || !v.contains('@'))
+                    if (v == null || !v.contains('@')) {
                       return 'Enter a valid email';
+                    }
                     return null;
                   },
                 ),
@@ -221,8 +224,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   textInputAction: TextInputAction.done,
                   validator: (v) {
-                    if (v == null || v.length < 8)
+                    if (v == null || v.length < 8) {
                       return 'Minimum 8 characters';
+                    }
                     return null;
                   },
                 ),
@@ -634,7 +638,7 @@ class _CropPicker extends StatelessWidget {
                             width: 36,
                             height: 36,
                             fit: BoxFit.contain,
-                            errorBuilder: (_, __, _) => Text(
+                            errorBuilder: (_, _, _) => Text(
                               crop.emoji,
                               style: const TextStyle(fontSize: 30),
                             ),
@@ -850,7 +854,7 @@ class _SocialButton extends StatelessWidget {
             width: 26,
             height: 26,
             fit: BoxFit.contain,
-            errorBuilder: (_, __, _) =>
+            errorBuilder: (_, _, _) =>
                 Icon(fallbackIcon, color: fallbackColor, size: 28),
           ),
         ),

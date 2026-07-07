@@ -15,7 +15,10 @@ class ProfileSettingsScreen extends StatelessWidget {
         elevation: 0,
         scrolledUnderElevation: 1,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_rounded, color: AppColors.textPrimary),
+          icon: const Icon(
+            Icons.arrow_back_ios_rounded,
+            color: AppColors.textPrimary,
+          ),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
@@ -227,7 +230,10 @@ class ProfileSettingsScreen extends StatelessWidget {
               width: double.infinity,
               child: OutlinedButton.icon(
                 onPressed: () {},
-                icon: const Icon(Icons.logout_rounded, color: AppColors.errorRed),
+                icon: const Icon(
+                  Icons.logout_rounded,
+                  color: AppColors.errorRed,
+                ),
                 label: Text(
                   'Log Out',
                   style: AppTextStyles.body.copyWith(
@@ -287,10 +293,7 @@ class _ProfileHeader extends StatelessWidget {
             decoration: BoxDecoration(
               color: AppColors.greenLighter,
               shape: BoxShape.circle,
-              border: Border.all(
-                color: AppColors.borderGreen,
-                width: 2,
-              ),
+              border: Border.all(color: AppColors.borderGreen, width: 2),
             ),
             child: const Icon(
               Icons.person_rounded,
@@ -318,10 +321,15 @@ class _ProfileHeader extends StatelessWidget {
                 ),
                 const SizedBox(height: 6),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
                   decoration: BoxDecoration(
                     color: AppColors.greenLighter,
-                    borderRadius: BorderRadius.circular(AppConstants.radiusPill),
+                    borderRadius: BorderRadius.circular(
+                      AppConstants.radiusPill,
+                    ),
                   ),
                   child: Text(
                     role,
@@ -336,10 +344,7 @@ class _ProfileHeader extends StatelessWidget {
           ),
           IconButton(
             onPressed: () {},
-            icon: const Icon(
-              Icons.edit_outlined,
-              color: AppColors.forestGreen,
-            ),
+            icon: const Icon(Icons.edit_outlined, color: AppColors.forestGreen),
           ),
         ],
       ),
@@ -416,11 +421,7 @@ class _SettingsTile extends StatelessWidget {
                 color: AppColors.greenLighter,
                 borderRadius: BorderRadius.circular(AppConstants.radiusS),
               ),
-              child: Icon(
-                icon,
-                size: 20,
-                color: AppColors.forestGreen,
-              ),
+              child: Icon(icon, size: 20, color: AppColors.forestGreen),
             ),
             const SizedBox(width: AppConstants.spacingM),
             Expanded(
@@ -446,7 +447,7 @@ class _SettingsTile extends StatelessWidget {
                 ],
               ),
             ),
-            if (trailing != null) trailing!,
+            ?trailing,
           ],
         ),
       ),

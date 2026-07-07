@@ -184,8 +184,9 @@ class _ConfirmPickupScreenState extends State<ConfirmPickupScreen> {
                         onChanged: (_) => setState(() {}),
                         validator: (v) {
                           final val = double.tryParse(v ?? '');
-                          if (val == null || val < 0)
+                          if (val == null || val < 0) {
                             return 'Enter a valid weight';
+                          }
                           return null;
                         },
                       ),
@@ -205,8 +206,9 @@ class _ConfirmPickupScreenState extends State<ConfirmPickupScreen> {
                         onChanged: (_) => setState(() {}),
                         validator: (v) {
                           final val = double.tryParse(v ?? '');
-                          if (val == null || val < 0)
+                          if (val == null || val < 0) {
                             return 'Enter a valid weight';
+                          }
                           return null;
                         },
                       ),

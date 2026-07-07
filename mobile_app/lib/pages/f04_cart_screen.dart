@@ -42,7 +42,7 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   // TODO: Replace with CartBloc state
-  List<CartItem> _items = List.from(kDemoCart);
+  final List<CartItem> _items = List.from(kDemoCart);
 
   // TODO: Replace with WalletBloc — current balance
   final int _availableCredits = 340;

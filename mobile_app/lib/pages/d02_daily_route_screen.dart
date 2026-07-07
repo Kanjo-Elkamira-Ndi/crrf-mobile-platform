@@ -150,7 +150,7 @@ class DailyRouteScreen extends StatelessWidget {
               child: ListView.separated(
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 28),
                 itemCount: kDemoTasks.length,
-                separatorBuilder: (_, __) => const SizedBox(height: 12),
+                separatorBuilder: (_, _) => const SizedBox(height: 12),
                 itemBuilder: (_, i) => _PickupCard(
                   pickup: kDemoTasks[i],
                   onTap: () => Navigator.of(context).pushNamed(

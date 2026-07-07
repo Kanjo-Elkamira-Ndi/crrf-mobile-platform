@@ -138,7 +138,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
                   : ListView.separated(
                       padding: const EdgeInsets.fromLTRB(20, 8, 20, 28),
                       itemCount: _filtered.length,
-                      separatorBuilder: (_, __) => const SizedBox(height: 10),
+                      separatorBuilder: (_, _) => const SizedBox(height: 10),
                       itemBuilder: (_, i) => _OrderCard(
                         order: _filtered[i],
                         onTap: () => Navigator.of(context).pushNamed(

@@ -211,7 +211,7 @@ class _OnboardingSlideWidget extends StatelessWidget {
               slide.illustration,
               fit: BoxFit.contain,
               // Fallback while illustrations aren't wired up:
-              errorBuilder: (_, __, ___) => Container(
+              errorBuilder: (_, _, _) => Container(
                 height: 280,
                 decoration: BoxDecoration(
                   color: const Color(0xFFF2F9EE),

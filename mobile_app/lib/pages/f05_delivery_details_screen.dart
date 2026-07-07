@@ -80,7 +80,7 @@ class _DeliveryDetailsScreenState extends State<DeliveryDetailsScreen> {
                     const SizedBox(height: 14),
 
                     DropdownButtonFormField<String>(
-                      value: _selectedDistrict,
+                      initialValue: _selectedDistrict,
                       decoration: InputDecoration(
                         labelText: 'District',
                         prefixIcon: const Icon(Icons.location_city_outlined),

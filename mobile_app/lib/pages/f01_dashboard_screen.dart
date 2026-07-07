@@ -161,7 +161,7 @@ class _FarmerDashboardScreenState extends State<FarmerDashboardScreen> {
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
                       itemCount: _promos.length,
-                      separatorBuilder: (_, __) => const SizedBox(width: 12),
+                      separatorBuilder: (_, _) => const SizedBox(width: 12),
                       itemBuilder: (_, i) =>
                           _PromoBannerCard(promo: _promos[i]),
                     ),
