@@ -146,10 +146,11 @@ class _DriverHistoryListScreenState extends State<DriverHistoryListScreen> {
   ];
 
   List<_HistoryEntry> _filteredEntries(List<_HistoryEntry> entries) {
-    if (_filter == null)
+    if (_filter == null) {
       return entries
           .where((e) => e.status != PickupTaskStatus.pending)
           .toList();
+    }
     return entries.where((e) => e.status == _filter).toList();
   }
 

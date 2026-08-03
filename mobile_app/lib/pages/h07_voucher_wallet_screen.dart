@@ -72,10 +72,12 @@ class _VoucherWalletScreenState extends State<VoucherWalletScreen>
 
   List<_TxEntry> get _filtered {
     final tab = _tabController.index;
-    if (tab == 1)
+    if (tab == 1) {
       return _transactions.where((t) => t.type == TxType.earned).toList();
-    if (tab == 2)
+    }
+    if (tab == 2) {
       return _transactions.where((t) => t.type == TxType.spent).toList();
+    }
     return _transactions;
   }
 

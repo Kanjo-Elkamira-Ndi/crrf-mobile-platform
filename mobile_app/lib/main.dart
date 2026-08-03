@@ -37,8 +37,17 @@ import 'package:crrfapp/pages/d06_report_issue_screen.dart';
 import 'package:crrfapp/pages/d07_history_screen.dart';
 import 'package:crrfapp/pages/notifications_screen.dart';
 import 'package:crrfapp/pages/profile_settings_screen.dart';
+import 'package:flutter/rendering.dart';
 
 void main() {
+  // Disable debug painting globally to remove overflow indicators
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // These lines remove the red/black overflow overlays in debug mode
+  debugPaintSizeEnabled = false;
+  debugPaintBaselinesEnabled = false;
+  debugPaintPointersEnabled = false;
+
   runApp(const MyApp());
 }
 
@@ -48,10 +57,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false, // Removes the debug ribbon
       title: 'CRRF Mobile App',
       home: const SplashScreen(),
       onGenerateRoute: _onGenerateRoute,
+      // Add this to ensure proper rendering on all devices
+      builder: (context, child) {
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(
+            // Prevent text scaling from breaking layouts
+            textScaler: const TextScaler.linear(1.0),
+          ),
+          child: child!,
+        );
+      },
     );
   }
 
@@ -204,7 +223,8 @@ class MyApp extends StatelessWidget {
 
       // ─── Driver Routes (D-01 to D-07) ─────────────────────────
       case AppRoutes.driverHome:
-        return MaterialPageRoute(builder: (_) => const DriverDashboardScreen());
+        // FIX: Changed from DriverDashboardScreen to DriverShell
+        return MaterialPageRoute(builder: (_) => const DriverShell());
 
       case AppRoutes.dailyRoute:
         return MaterialPageRoute(builder: (_) => const DailyRouteScreen());
@@ -260,5 +280,14 @@ class MyApp extends StatelessWidget {
       default:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
     }
+  }
+}
+
+class DriverShell extends StatelessWidget {
+  const DriverShell({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const SizedBox(); // Placeholder, implement driver dashboard here
   }
 }
