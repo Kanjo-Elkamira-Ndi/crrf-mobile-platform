@@ -223,8 +223,9 @@ class MyApp extends StatelessWidget {
 
       // ─── Driver Routes (D-01 to D-07) ─────────────────────────
       case AppRoutes.driverHome:
-        // FIX: Changed from DriverDashboardScreen to DriverShell
-        return MaterialPageRoute(builder: (_) => const DriverShell());
+        return MaterialPageRoute(
+          builder: (_) => const DriverDashboardScreen(),
+        );
 
       case AppRoutes.dailyRoute:
         return MaterialPageRoute(builder: (_) => const DailyRouteScreen());
@@ -280,14 +281,5 @@ class MyApp extends StatelessWidget {
       default:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
     }
-  }
-}
-
-class DriverShell extends StatelessWidget {
-  const DriverShell({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const SizedBox(); // Placeholder, implement driver dashboard here
   }
 }

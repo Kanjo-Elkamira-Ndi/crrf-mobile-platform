@@ -45,6 +45,12 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
       label: 'Farmer',
       sublabel: 'Buy organic manure, pay with vouchers',
     ),
+    _RoleItem(
+      role: UserRole.driver,
+      icon: Icons.local_shipping_outlined,
+      label: 'Driver',
+      sublabel: 'Manage routes, confirm pickups, issue credits',
+    ),
   ];
 
   @override
@@ -93,19 +99,15 @@ class _RoleSelectionScreenState extends State<RoleSelectionScreen> {
                     const SizedBox(height: 44),
 
                     // ── Selectable rows ──────────────────────
-                    _RoleRow(
-                      item: _roles[0],
-                      isSelected: _selected == _roles[0].role,
-                      onTap: () => setState(() => _selected = _roles[0].role),
-                    ),
-
-                    const SizedBox(height: 16),
-
-                    _RoleRow(
-                      item: _roles[1],
-                      isSelected: _selected == _roles[1].role,
-                      onTap: () => setState(() => _selected = _roles[1].role),
-                    ),
+                    for (int i = 0; i < _roles.length; i++) ...[
+                      _RoleRow(
+                        item: _roles[i],
+                        isSelected: _selected == _roles[i].role,
+                        onTap: () =>
+                            setState(() => _selected = _roles[i].role),
+                      ),
+                      if (i < _roles.length - 1) const SizedBox(height: 16),
+                    ],
 
                     const SizedBox(height: 40),
                   ],
