@@ -1,11 +1,20 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import { Leaf, Package, CircleDot } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 
-const products = [
-  { name: 'Premium Organic Manure', emoji: '🌱', creditPrice: 80, cashPrice: 4000 },
-  { name: 'Compost Blend', emoji: '🍂', creditPrice: 60, cashPrice: 3000 },
-  { name: 'Bio-Fertiliser Pellets', emoji: '⚪', creditPrice: 120, cashPrice: 6000 },
+interface Product {
+  name: string;
+  icon: LucideIcon;
+  creditPrice: number;
+  cashPrice: number;
+}
+
+const products: Product[] = [
+  { name: 'Premium Organic Manure', icon: Leaf, creditPrice: 80, cashPrice: 4000 },
+  { name: 'Compost Blend', icon: Package, creditPrice: 60, cashPrice: 3000 },
+  { name: 'Bio-Fertiliser Pellets', icon: CircleDot, creditPrice: 120, cashPrice: 6000 },
 ];
 
 export default function CreditCalculator() {
@@ -16,7 +25,6 @@ export default function CreditCalculator() {
     const pInput = parseFloat(plasticKg) || 0;
     const oInput = parseFloat(organicKg) || 0;
 
-    // Round down to nearest 0.5 kg
     const roundDown = (n: number) => Math.floor(n * 2) / 2;
     const rp = roundDown(pInput);
     const ro = roundDown(oInput);
@@ -48,8 +56,9 @@ export default function CreditCalculator() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
         <div>
-          <label htmlFor="plastic" className="block text-sm font-medium text-crrf-ink mb-1">
-            ♳ Plastic (kg)
+          <label htmlFor="plastic" className="block text-sm font-medium text-crrf-ink mb-1 flex items-center">
+            <Package className="h-4 w-4 mr-2 text-crrf-forest" />
+            Plastic (kg)
           </label>
           <input
             id="plastic"
@@ -64,8 +73,9 @@ export default function CreditCalculator() {
           <p className="text-xs text-crrf-subtle mt-1">10 pts per kg · rounded down to 0.5 kg</p>
         </div>
         <div>
-          <label htmlFor="organic" className="block text-sm font-medium text-crrf-ink mb-1">
-            🌿 Organic (kg)
+          <label htmlFor="organic" className="block text-sm font-medium text-crrf-ink mb-1 flex items-center">
+            <Leaf className="h-4 w-4 mr-2 text-crrf-forest" />
+            Organic (kg)
           </label>
           <input
             id="organic"
@@ -119,20 +129,23 @@ export default function CreditCalculator() {
           </h4>
           {affordableProducts.length > 0 ? (
             <div className="space-y-2">
-              {affordableProducts.map((product) => (
-                <div
-                  key={product.name}
-                  className="flex items-center justify-between bg-crrf-bg rounded-[4px] px-4 py-3"
-                >
-                  <div className="flex items-center">
-                    <span className="text-xl mr-3">{product.emoji}</span>
-                    <span className="text-sm text-crrf-ink">{product.name}</span>
+              {affordableProducts.map((product) => {
+                const Icon = product.icon;
+                return (
+                  <div
+                    key={product.name}
+                    className="flex items-center justify-between bg-crrf-bg rounded-[4px] px-4 py-3"
+                  >
+                    <div className="flex items-center">
+                      <Icon className="h-6 w-6 mr-3 text-crrf-forest" />
+                      <span className="text-sm text-crrf-ink">{product.name}</span>
+                    </div>
+                    <span className="font-mono text-sm font-semibold text-crrf-forest">
+                      {product.creditPrice} pts
+                    </span>
                   </div>
-                  <span className="font-mono text-sm font-semibold text-crrf-forest">
-                    {product.creditPrice} pts
-                  </span>
-                </div>
-              ))}
+                );
+              })}
             </div>
           ) : (
             <p className="text-sm text-crrf-muted italic">

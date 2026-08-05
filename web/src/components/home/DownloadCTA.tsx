@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { Smartphone } from 'lucide-react';
 
 export default function DownloadCTA() {
   const [email, setEmail] = useState('');
@@ -81,7 +82,7 @@ export default function DownloadCTA() {
         )}
 
         <div className="mt-8 inline-flex items-center px-4 py-2 rounded-full bg-white/10 text-white/60 text-sm">
-          <span className="mr-2">📱</span>
+            <Smartphone className="h-4 w-4 mr-2 inline-block" />
           Available on Android · Coming 2026
         </div>
       </div>

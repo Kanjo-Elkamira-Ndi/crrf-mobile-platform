@@ -1,4 +1,4 @@
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, Recycle } from 'lucide-react';
 
 const keyPoints = [
   'Credits earned per confirmed kg, not per request',
@@ -32,7 +32,7 @@ export default function VoucherExplainer() {
               {keyPoints.map((point) => (
                 <div key={point} className="flex items-start">
                   <CheckCircle2 className="h-5 w-5 text-crrf-forest mt-0.5 mr-3 flex-shrink-0" />
-                  <span className="text-crrf-ink text-sm">{point}</span>
+                  <span className="text-sm text-crrf-ink">{point}</span>
                 </div>
               ))}
             </div>
@@ -46,7 +46,9 @@ export default function VoucherExplainer() {
                   <p className="text-xs opacity-70 uppercase tracking-wider">CRF Wallet</p>
                   <p className="text-sm opacity-90 mt-1">Ama Mbarga</p>
                 </div>
-                <div className="text-2xl">♻</div>
+                <div className="text-2xl">
+                  <Recycle className="h-7 w-7" />
+                </div>
               </div>
 
               <div className="mb-6">
