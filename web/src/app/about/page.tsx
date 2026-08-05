@@ -40,8 +40,9 @@ export default function AboutPage() {
   return (
     <>
       {/* Hero */}
-      <section className="text-white py-20" style={{ background: '#1B6B3A' }}>
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="relative min-h-[50vh] bg-cover bg-center text-white py-20" style={{ backgroundImage: 'url(/hero_3.avif)' }}>
+        <div className="absolute inset-0 bg-crrf-forest/60" />
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="font-display text-4xl sm:text-5xl font-bold mb-4">
             We are turning Cameroon&apos;s waste into wealth.
           </h1>

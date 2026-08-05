@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, Recycle } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const navLinks = [
@@ -24,10 +24,10 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid h-16 grid-cols-2 items-center md:grid-cols-[1fr_auto_1fr]">
             <Link href="/" className="flex items-center space-x-3 justify-self-start">
-              <Recycle className="h-6 w-6 text-crrf-forest" />
-              <span className="font-display text-2xl font-bold text-crrf-forest">
+              <img src="/logo.png" alt="CRRF Logo" className="h-18 w-25" />
+              {/* <span className="font-display text-2xl font-bold text-crrf-forest">
                 CRRF
-              </span>
+              </span> */}
             </Link>
 
             <div className="hidden md:flex items-center justify-center space-x-6 lg:space-x-8">

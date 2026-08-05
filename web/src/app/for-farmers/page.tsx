@@ -31,21 +31,21 @@ const features = [
 
 const products = [
   {
-    emoji: '🌱',
+    img: '/organic manure.jpg',
     name: 'Premium Organic Manure',
     description: 'High-grade composted organic waste',
     creditPrice: 80,
     cashPrice: '4,000 XAF',
   },
   {
-    emoji: '🍂',
+    img: '/compost_blend.jpeg',
     name: 'Compost Blend',
     description: 'Balanced mix for general crop use',
     creditPrice: 60,
     cashPrice: '3,000 XAF',
   },
   {
-    emoji: '⚪',
+    img: '/bio-fertilizer-pellets.jpeg',
     name: 'Bio-Fertiliser Pellets',
     description: 'Slow-release pellets for sustained growth',
     creditPrice: 120,
@@ -80,8 +80,9 @@ export default function ForFarmersPage() {
   return (
     <>
       {/* Hero */}
-      <section className="bg-gradient-to-br from-crrf-brown to-[#4A3530] text-white py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="relative min-h-[50vh] bg-cover bg-center text-white py-20" style={{ backgroundImage: 'url(/hero_2.png)' }}>
+        <div className="absolute inset-0 bg-crrf-brown/60" />
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="font-display text-4xl sm:text-5xl font-bold mb-4">
             Better manure. Lower cost. Delivered to your farm.
           </h1>
@@ -126,7 +127,41 @@ export default function ForFarmersPage() {
         </div>
       </section>
 
-      {/* Product preview grid */}
+             {/* Screenshots section with phone mockups */}
+       <section className="bg-crrf-green-faint py-16">
+         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+           <div className="text-center mb-12">
+             <span className="text-crrf-gold font-semibold text-sm uppercase tracking-wider">
+               The App
+             </span>
+             <h2 className="font-display text-3xl sm:text-4xl font-bold text-crrf-forest mt-2">
+               Designed for everyday use
+             </h2>
+           </div>
+
+           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
+             {[
+               { src: '/img_1.jpg', label: 'Category Selection' },
+               { src: '/img_3.jpg', label: 'Farmer Dashboard' },
+             ].map((screen) => (
+               <div key={screen.label} className="text-center">
+                 <div className="bg-crrf-white rounded-[24px] border-4 border-crrf-forest overflow-hidden aspect-[9/19] mx-auto max-w-[200px]">
+                   <img
+                     src={screen.src}
+                     alt={screen.label}
+                     className="w-full h-full object-cover"
+                   />
+                 </div>
+                 <span className="text-xs font-medium text-crrf-muted mt-2 block">
+                   {screen.label}
+                 </span>
+               </div>
+             ))}
+           </div>
+         </div>
+       </section>
+
+       {/* Product preview grid */}
       <section className="bg-crrf-green-faint py-16">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
@@ -144,7 +179,13 @@ export default function ForFarmersPage() {
                 key={product.name}
                 className="bg-crrf-white rounded-[12px] p-6 border border-crrf-border shadow-sm hover:shadow-md transition-shadow"
               >
-                <div className="text-5xl mb-4 text-center">{product.emoji}</div>
+                <div className="h-48 rounded-[8px] overflow-hidden mb-4 border border-crrf-border">
+                  <img
+                    src={product.img}
+                    alt={product.name}
+                    className="w-full h-full object-cover object-center"
+                  />
+                </div>
                 <h3 className="font-semibold text-crrf-ink text-center mb-1">{product.name}</h3>
                 <p className="text-xs text-crrf-muted text-center mb-4">{product.description}</p>
                 <div className="flex justify-between items-center pt-4 border-t border-crrf-border">
