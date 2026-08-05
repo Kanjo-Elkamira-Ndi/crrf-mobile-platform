@@ -45,7 +45,6 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   void initState() {
     super.initState();
     _startTimer();
-    // Auto-focus first box
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _focusNodes[0].requestFocus();
     });
@@ -89,17 +88,14 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
       _hasError = false;
     });
 
-    // TODO: Call AuthRepository.verifyOtp(phone, otp)
     await Future.delayed(const Duration(seconds: 1));
 
-    // Simulate: '123456' is valid, anything else is invalid
     final isValid = _currentOtp == '123456';
 
     if (!mounted) return;
     setState(() => _isLoading = false);
 
     if (isValid) {
-      // Navigate to appropriate home screen based on role
       final route = switch (widget.role) {
         UserRole.household => AppRoutes.householdHome,
         UserRole.farmer => AppRoutes.farmerHome,
@@ -109,7 +105,6 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
       Navigator.of(context).pushNamedAndRemoveUntil(route, (_) => false);
     } else {
       setState(() => _hasError = true);
-      // Clear boxes and refocus first
       for (final c in _controllers) {
         c.clear();
       }
@@ -118,7 +113,6 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   }
 
   Future<void> _resend() async {
-    // TODO: Call AuthRepository.resendOtp(phone)
     _startTimer();
     for (final c in _controllers) {
       c.clear();
@@ -145,130 +139,134 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   @override
   Widget build(BuildContext context) {
     final maskedPhone = _maskPhone(widget.phone);
+    final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       backgroundColor: AppColors.background,
+      resizeToAvoidBottomInset: true,
       appBar: AppBar(
         backgroundColor: AppColors.background,
         elevation: 0,
         leading: const BackButton(),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 28),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(height: 20),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 28),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: screenHeight),
+            child: IntrinsicHeight(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 20),
 
-            // ── Icon ────────────────────────────────────────
-            Container(
-              width: 80,
-              height: 80,
-              decoration: const BoxDecoration(
-                color: AppColors.greenLighter,
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                Icons.sms_outlined,
-                color: AppColors.forestGreen,
-                size: 36,
-              ),
-            ),
-
-            const SizedBox(height: 28),
-
-            // ── Header ──────────────────────────────────────
-            Text(
-              'Verify your number',
-              style: AppTextStyles.h1,
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 10),
-            Text(
-              'Enter the 6-digit code sent to\n$maskedPhone',
-              style: AppTextStyles.body.copyWith(
-                color: AppColors.textSecondary,
-                height: 1.6,
-              ),
-              textAlign: TextAlign.center,
-            ),
-
-            const SizedBox(height: 40),
-
-            // ── OTP Boxes ────────────────────────────────────
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: List.generate(_otpLength, (i) {
-                return _OtpBox(
-                  controller: _controllers[i],
-                  focusNode: _focusNodes[i],
-                  hasError: _hasError,
-                  onChanged: (v) => _onDigitChanged(i, v),
-                );
-              }),
-            ),
-
-            const SizedBox(height: 12),
-
-            // ── Error message ────────────────────────────────
-            AnimatedSwitcher(
-              duration: AppConstants.animFast,
-              child: _hasError
-                  ? Padding(
-                      padding: const EdgeInsets.only(top: 4),
-                      child: Text(
-                        'Incorrect code. Please try again.',
-                        style: AppTextStyles.bodySmall.copyWith(
-                          color: AppColors.errorRed,
-                        ),
-                        key: const ValueKey('error'),
-                      ),
-                    )
-                  : const SizedBox(key: ValueKey('no-error')),
-            ),
-
-            const SizedBox(height: 32),
-
-            // ── Verify button ────────────────────────────────
-            CrrfPrimaryButton(
-              label: 'Verify & Continue',
-              onPressed: _isComplete && !_isLoading ? _verify : null,
-              isLoading: _isLoading,
-            ),
-
-            const SizedBox(height: 24),
-
-            // ── Resend ───────────────────────────────────────
-            if (_countdown > 0)
-              Text.rich(
-                TextSpan(
-                  text: 'Resend code in ',
-                  style: AppTextStyles.bodySmall,
-                  children: [
-                    TextSpan(
-                      text: '${_countdown}s',
-                      style: AppTextStyles.bodySmall.copyWith(
-                        color: AppColors.forestGreen,
-                        fontWeight: FontWeight.w700,
-                      ),
+                  Container(
+                    width: 80,
+                    height: 80,
+                    decoration: const BoxDecoration(
+                      color: AppColors.greenLighter,
+                      shape: BoxShape.circle,
                     ),
-                  ],
-                ),
-              )
-            else
-              TextButton(
-                onPressed: _resend,
-                child: const Text("Didn't receive a code? Resend"),
+                    child: const Icon(
+                      Icons.sms_outlined,
+                      color: AppColors.forestGreen,
+                      size: 36,
+                    ),
+                  ),
+
+                  const SizedBox(height: 28),
+
+                  Text(
+                    'Verify your number',
+                    style: AppTextStyles.h1,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    'Enter the 6-digit code sent to\n$maskedPhone',
+                    style: AppTextStyles.body.copyWith(
+                      color: AppColors.textSecondary,
+                      height: 1.6,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+
+                  const SizedBox(height: 40),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: List.generate(_otpLength, (i) {
+                      return _OtpBox(
+                        controller: _controllers[i],
+                        focusNode: _focusNodes[i],
+                        hasError: _hasError,
+                        onChanged: (v) => _onDigitChanged(i, v),
+                      );
+                    }),
+                  ),
+
+                  const SizedBox(height: 12),
+
+                  AnimatedSwitcher(
+                    duration: AppConstants.animFast,
+                    child: _hasError
+                        ? Padding(
+                            padding: const EdgeInsets.only(top: 4),
+                            child: Text(
+                              'Incorrect code. Please try again.',
+                              style: AppTextStyles.bodySmall.copyWith(
+                                color: AppColors.errorRed,
+                              ),
+                              key: const ValueKey('error'),
+                            ),
+                          )
+                        : const SizedBox(key: ValueKey('no-error')),
+                  ),
+
+                  const SizedBox(height: 32),
+
+                  CrrfPrimaryButton(
+                    label: 'Verify & Continue',
+                    onPressed: _isComplete && !_isLoading ? _verify : null,
+                    isLoading: _isLoading,
+                  ),
+
+                  const SizedBox(height: 24),
+
+                  _countdown > 0
+                      ? Text.rich(
+                          TextSpan(
+                            text: 'Resend code in ',
+                            style: AppTextStyles.bodySmall,
+                            children: [
+                              TextSpan(
+                                text: '${_countdown}s',
+                                style: AppTextStyles.bodySmall.copyWith(
+                                  color: AppColors.forestGreen,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : TextButton(
+                          onPressed: _resend,
+                          child:
+                              const Text("Didn't receive a code? Resend"),
+                        ),
+
+                  const SizedBox(height: 16),
+
+                  CalloutCard(
+                    message:
+                        'Demo mode: use 1 2 3 4 5 6 as the verification code.',
+                    type: CalloutType.info,
+                  ),
+                  const SizedBox(height: 24),
+                ],
               ),
-
-            const SizedBox(height: 16),
-
-            // Demo hint
-            CalloutCard(
-              message: 'Demo mode: use 1 2 3 4 5 6 as the verification code.',
-              type: CalloutType.info,
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -282,7 +280,6 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   }
 }
 
-// ─────────────────────────────────────────────────────────────
 class _OtpBox extends StatelessWidget {
   final TextEditingController controller;
   final FocusNode focusNode;
