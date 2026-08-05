@@ -357,22 +357,22 @@ class _TxRow extends StatelessWidget {
   const _TxRow({required this.entry, required this.onTap});
 
   IconData get _icon => switch (entry.type) {
-        TxType.earned => Icons.recycling_rounded,
-        TxType.spent => Icons.shopping_bag_outlined,
-        TxType.expired => Icons.timer_off_outlined,
-      };
+    TxType.earned => Icons.recycling_rounded,
+    TxType.spent => Icons.shopping_bag_outlined,
+    TxType.expired => Icons.timer_off_outlined,
+  };
 
   Color get _iconColor => switch (entry.type) {
-        TxType.earned => AppColors.forestGreen,
-        TxType.spent => AppColors.earthBrown,
-        TxType.expired => AppColors.textTertiary,
-      };
+    TxType.earned => AppColors.forestGreen,
+    TxType.spent => AppColors.earthBrown,
+    TxType.expired => AppColors.textTertiary,
+  };
 
   Color get _iconBg => switch (entry.type) {
-        TxType.earned => AppColors.greenLighter,
-        TxType.spent => AppColors.brownLighter,
-        TxType.expired => AppColors.surfaceGray,
-      };
+    TxType.earned => AppColors.greenLighter,
+    TxType.spent => AppColors.brownLighter,
+    TxType.expired => AppColors.surfaceGray,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -430,8 +430,8 @@ class _TxRow extends StatelessWidget {
                     color: entry.type == TxType.expired
                         ? AppColors.textTertiary
                         : isCredit
-                            ? AppColors.forestGreen
-                            : AppColors.errorRed,
+                        ? AppColors.forestGreen
+                        : AppColors.errorRed,
                   ),
                 ),
                 const SizedBox(height: 4),

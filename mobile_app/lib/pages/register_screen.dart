@@ -638,7 +638,7 @@ class _CropPicker extends StatelessWidget {
                             width: 36,
                             height: 36,
                             fit: BoxFit.contain,
-                            errorBuilder: (_, __, _) => Text(
+                            errorBuilder: (_, _, _) => Text(
                               crop.emoji,
                               style: const TextStyle(fontSize: 30),
                             ),
@@ -854,7 +854,7 @@ class _SocialButton extends StatelessWidget {
             width: 26,
             height: 26,
             fit: BoxFit.contain,
-            errorBuilder: (_, __, _) =>
+            errorBuilder: (_, _, _) =>
                 Icon(fallbackIcon, color: fallbackColor, size: 28),
           ),
         ),
