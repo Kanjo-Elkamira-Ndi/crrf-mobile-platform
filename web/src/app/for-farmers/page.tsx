@@ -31,21 +31,21 @@ const features = [
 
 const products = [
   {
-    emoji: '🌱',
+    img: '/organic manure.jpg',
     name: 'Premium Organic Manure',
     description: 'High-grade composted organic waste',
     creditPrice: 80,
     cashPrice: '4,000 XAF',
   },
   {
-    emoji: '🍂',
+    img: '/compost_blend.jpeg',
     name: 'Compost Blend',
     description: 'Balanced mix for general crop use',
     creditPrice: 60,
     cashPrice: '3,000 XAF',
   },
   {
-    emoji: '⚪',
+    img: '/bio-fertilizer-pellets.jpeg',
     name: 'Bio-Fertiliser Pellets',
     description: 'Slow-release pellets for sustained growth',
     creditPrice: 120,
@@ -178,7 +178,13 @@ export default function ForFarmersPage() {
                 key={product.name}
                 className="bg-crrf-white rounded-[12px] p-6 border border-crrf-border shadow-sm hover:shadow-md transition-shadow"
               >
-                <div className="text-5xl mb-4 text-center">{product.emoji}</div>
+                <div className="h-48 rounded-[8px] overflow-hidden mb-4 border border-crrf-border">
+                  <img
+                    src={product.img}
+                    alt={product.name}
+                    className="w-full h-full object-cover object-center"
+                  />
+                </div>
                 <h3 className="font-semibold text-crrf-ink text-center mb-1">{product.name}</h3>
                 <p className="text-xs text-crrf-muted text-center mb-4">{product.description}</p>
                 <div className="flex justify-between items-center pt-4 border-t border-crrf-border">
