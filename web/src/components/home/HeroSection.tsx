@@ -3,12 +3,18 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import CrrfCycleRing from './CrrfCycleRing';
+import HeroCarousel from './HeroCarousel';
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-screen bg-gradient-to-b from-crrf-forest via-crrf-forest to-[#0D3B1E] overflow-hidden">
-      {/* Subtle texture overlay */}
-      <div className="absolute inset-0 opacity-10">
+    <section className="relative min-h-screen overflow-hidden">
+      <HeroCarousel />
+
+      {/* Dark overlay to ensure text readability (in addition to carousel overlay) */}
+      <div className="absolute inset-0 bg-crrf-forest/50" />
+
+      {/* Glowing orbs for ambient color, layered above carousel but below content */}
+      <div className="absolute inset-0 opacity-15 pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 rounded-full bg-crrf-gold/20 blur-3xl" />
         <div className="absolute bottom-40 right-10 w-96 h-96 rounded-full bg-crrf-green-mid/30 blur-3xl" />
       </div>
