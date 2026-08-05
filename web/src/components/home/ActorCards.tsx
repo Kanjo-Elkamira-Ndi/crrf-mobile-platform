@@ -1,10 +1,24 @@
 import Link from 'next/link';
+import { Home, Wheat, Truck, ArrowRight } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-const actors = [
+interface Actor {
+  id: string;
+  icon: LucideIcon;
+  title: string;
+  subtitle: string;
+  description: string;
+  cta: string;
+  href: string;
+  color: string;
+  bgClass: string;
+}
+
+const actors: Actor[] = [
   {
     id: 'household',
-    emoji: '🏠',
+    icon: Home,
     title: 'Households',
     subtitle: 'Forest Green',
     description: 'Sort waste at home. Earn CRF Credits. Track your environmental impact.',
@@ -15,7 +29,7 @@ const actors = [
   },
   {
     id: 'farmer',
-    emoji: '🌾',
+    icon: Wheat,
     title: 'Farmers',
     subtitle: 'Earth Brown',
     description: 'Buy quality organic manure with vouchers. Request delivery to your farm.',
@@ -26,7 +40,7 @@ const actors = [
   },
   {
     id: 'driver',
-    emoji: '🚛',
+    icon: Truck,
     title: 'Drivers',
     subtitle: 'Blue Grey',
     description: 'Manage your daily route. Confirm pickups. Trigger credit issuance — all in-app.',
@@ -51,38 +65,44 @@ export default function ActorCards() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {actors.map((actor) => (
-            <div
-              key={actor.id}
-              className={cn(
-                'rounded-[12px] p-[1px] overflow-hidden transition-transform hover:scale-[1.02]',
-              )}
-            >
-              <div className="h-full flex flex-col">
-                <div className={cn('p-8 text-center', actor.bgClass + ' text-white')}>
-                  <div className="text-4xl mb-4">{actor.emoji}</div>
-                  <h3 className="font-display text-2xl font-bold mb-1">{actor.title}</h3>
-                  <p className="text-sm opacity-75">{actor.subtitle}</p>
-                </div>
-                <div className="p-8 bg-crrf-white flex-1 flex flex-col">
-                  <p className="text-crrf-muted text-sm leading-relaxed mb-6 flex-1">
-                    {actor.description}
-                  </p>
-                  <Link
-                    href={actor.href}
-                    className={cn(
-                      'w-full py-3 px-6 rounded-full font-medium text-center transition-colors',
-                      actor.id === 'household' && 'bg-crrf-forest text-white hover:bg-crrf-green-mid',
-                      actor.id === 'farmer' && 'bg-crrf-brown text-white hover:bg-crrf-brown/80',
-                      actor.id === 'driver' && 'bg-gray-700 text-white hover:bg-gray-700/80',
-                    )}
-                  >
-                    {actor.cta} →
-                  </Link>
+          {actors.map((actor) => {
+            const Icon = actor.icon;
+            return (
+              <div
+                key={actor.id}
+                className={cn(
+                  'rounded-[12px] p-[1px] overflow-hidden transition-transform hover:scale-[1.02]',
+                )}
+              >
+                <div className="h-full flex flex-col">
+                  <div className={cn('p-8 text-center', actor.bgClass + ' text-white')}>
+                    <div className="flex justify-center mb-4">
+                      <Icon className="h-10 w-10" />
+                    </div>
+                    <h3 className="font-display text-2xl font-bold mb-1">{actor.title}</h3>
+                    <p className="text-sm opacity-75">{actor.subtitle}</p>
+                  </div>
+                  <div className="p-8 bg-crrf-white flex-1 flex flex-col">
+                    <p className="text-crrf-muted text-sm leading-relaxed mb-6 flex-1">
+                      {actor.description}
+                    </p>
+                    <Link
+                      href={actor.href}
+                      className={cn(
+                        'w-full py-3 px-6 rounded-full font-medium text-center flex items-center justify-center gap-2 transition-colors',
+                        actor.id === 'household' && 'bg-crrf-forest text-white hover:bg-crrf-green-mid',
+                        actor.id === 'farmer' && 'bg-crrf-brown text-white hover:bg-crrf-brown/80',
+                        actor.id === 'driver' && 'bg-gray-700 text-white hover:bg-gray-700/80',
+                      )}
+                    >
+                      {actor.cta}
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

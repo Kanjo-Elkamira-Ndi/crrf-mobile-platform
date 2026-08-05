@@ -2,20 +2,22 @@
 
 import { motion, useReducedMotion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { Home, Truck, Settings, Wheat } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 
 interface CycleNode {
   id: number;
   label: string;
-  emoji: string;
+  icon: LucideIcon;
   color: string;
   position: { x: number; y: number };
 }
 
 const cycleNodes: CycleNode[] = [
-  { id: 0, label: 'Household', emoji: '🏠', color: '#1B6B3A', position: { x: 0, y: -180 } },
-  { id: 1, label: 'Collection', emoji: '🚛', color: '#6B7280', position: { x: 180, y: 0 } },
-  { id: 2, label: 'Processing', emoji: '⚙', color: '#6D4C41', position: { x: 0, y: 180 } },
-  { id: 3, label: 'Farm', emoji: '🌾', color: '#2E8B57', position: { x: -180, y: 0 } },
+  { id: 0, label: 'Household', icon: Home, color: '#1B6B3A', position: { x: 0, y: -180 } },
+  { id: 1, label: 'Collection', icon: Truck, color: '#6B7280', position: { x: 180, y: 0 } },
+  { id: 2, label: 'Processing', icon: Settings, color: '#6D4C41', position: { x: 0, y: 180 } },
+  { id: 3, label: 'Farm', icon: Wheat, color: '#2E8B57', position: { x: -180, y: 0 } },
 ];
 
 const ringRadius = 180;
@@ -23,6 +25,16 @@ const centerX = 200;
 const centerY = 200;
 const nodeRadius = 28;
 const labelOffset = 38;
+
+// SVG path data for icons (extracted from Lucide React for use inside SVG foreignObject fallback)
+const iconPaths: Record<string, string[]> = {
+  Home: ['M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z', 'M9 18v-6h6v6'],
+  Truck: ['M3 16v5a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-5M3 16l2-2V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v7l2 2'],
+  Settings: ['M12 15.5A3.5 3.5 0 0 1 8.5 12A3.5 3.5 0 0 1 12 8.5a3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5Zm7.43-2.54a9.43 9.43 0 0 0 0-2.54 2.94 2.94 0 0 0 2.42-2.42 2.94 2.94 0 0 0-.55-2.55l-2.1 2.1a17.8 17.8 0 0 0-1.42-1.29l.65-2.52a2.94 2.94 0 0 0-2.42-2.12 2.94 2.94 0 0 0-1.82.87 17.7 17.7 0 0 0-1.29-1.42l-2.52.65a2.94 2.94 0 0 0-2.12-2.42 2.94 2.94 0 0 0-2.55.55l2.1 2.1A17.9 17.9 0 0 0 5.46 6.17l-.65 2.52a2.94 2.94 0 0 0 .55 2.55 2.94 2.94 0 0 1 .93.93 2.94 2.94 0 0 0 1.62 1.62 2.94 2.94 0 0 1-.23 2.37A9.4 9.4 0 0 0 4.56 13.2'],
+  Wheat: ['M2 22l20-20'],
+};
+
+const iconNames = ['Home', 'Truck', 'Settings', 'Wheat'];
 
 export default function CrrfCycleRing() {
   const shouldReduceMotion = useReducedMotion();
@@ -56,6 +68,27 @@ export default function CrrfCycleRing() {
     const end = polarToCartesian(ringRadius, endAngle);
     const largeArc = endAngle - startAngle > 180 ? 1 : 0;
     return `M ${start.x} ${start.y} A ${ringRadius} ${ringRadius} 0 ${largeArc} 1 ${end.x} ${end.y}`;
+  };
+
+  const renderIcon = (iconName: string, isActive: boolean, isNext: boolean) => {
+    const paths = iconPaths[iconName] || [];
+    return (
+      <svg
+        width="28"
+        height="28"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={isActive ? "2.5" : isNext ? "2" : "1.5"}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        style={{ color: isActive ? '#FFFFFF' : isNext ? '#FFFFFF' : '#FFFFFF' }}
+      >
+        {paths.map((path, i) => (
+          <path key={i} d={path} />
+        ))}
+      </svg>
+    );
   };
 
   return (
@@ -137,10 +170,11 @@ export default function CrrfCycleRing() {
         </defs>
 
         {/* Nodes */}
-        {cycleNodes.map((node) => {
+        {cycleNodes.map((node, idx) => {
           const pos = getNodePosition(node);
           const isActive = node.id === activeNode;
           const isNext = node.id === nextNodeIndex;
+          const iconName = iconNames[idx];
 
           return (
             <g key={node.id}>
@@ -164,13 +198,13 @@ export default function CrrfCycleRing() {
                 strokeWidth="3"
               />
               <foreignObject
-                x={pos.x - 22}
-                y={pos.y - 22}
-                width="44"
-                height="44"
+                x={pos.x - 18}
+                y={pos.y - 18}
+                width="36"
+                height="36"
               >
-                <div className="flex items-center justify-center text-2xl">
-                  {node.emoji}
+                <div className="flex items-center justify-center">
+                  {renderIcon(iconName, isActive, isNext)}
                 </div>
               </foreignObject>
 

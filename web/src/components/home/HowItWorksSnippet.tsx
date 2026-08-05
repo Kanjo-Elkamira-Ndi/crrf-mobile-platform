@@ -1,24 +1,32 @@
 import Link from 'next/link';
+import { Home, Truck, Wheat, ArrowRight, type LucideIcon } from 'lucide-react';
 import { ChevronRight } from 'lucide-react';
 
-const steps = [
+interface Step {
+  number: string;
+  icon: LucideIcon;
+  title: string;
+  description: string;
+}
+
+const steps: Step[] = [
   {
     number: '1',
-    emoji: '🏠',
+    icon: Home,
     title: 'Households sort & schedule',
     description:
       'Register on the app, separate plastic and organic waste, and request a free pickup. Earn CRF Credits for every kilogram confirmed.',
   },
   {
     number: '2',
-    emoji: '🚛',
+    icon: Truck,
     title: 'Drivers collect & confirm',
     description:
       'CRRF drivers pick up your waste, weigh it on-site, and confirm the pickup. Credits are issued automatically — no manual process.',
   },
   {
     number: '3',
-    emoji: '🌾',
+    icon: Wheat,
     title: 'Farmers buy & grow',
     description:
       "Farmers browse the CRRF marketplace and purchase processed organic manure using their credits or cash on delivery. Better crops. Lower costs.",
@@ -39,22 +47,25 @@ export default function HowItWorksSnippet() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {steps.map((step) => (
-            <div key={step.number} className="relative">
-              <div className="bg-crrf-white rounded-[12px] p-8 shadow-sm border border-crrf-border">
-                <div className="flex items-center justify-center w-10 h-10 rounded-full bg-crrf-forest text-crrf-white font-bold text-lg mb-4 mx-auto">
-                  {step.number}
+          {steps.map((step) => {
+            const Icon = step.icon;
+            return (
+              <div key={step.number} className="relative">
+                <div className="bg-crrf-white rounded-[12px] p-8 shadow-sm border border-crrf-border">
+                  <div className="flex items-center justify-center w-10 h-10 rounded-full bg-crrf-forest text-white mb-4 mx-auto">
+                    <span className="font-mono font-bold">{step.number}</span>
+                  </div>
+                  <div className="flex justify-center mb-3">
+                    <Icon className="h-8 w-8 text-crrf-forest" />
+                  </div>
+                  <h3 className="font-semibold text-crrf-ink text-center mb-3">{step.title}</h3>
+                  <p className="text-sm text-crrf-muted text-center leading-relaxed">
+                    {step.description}
+                  </p>
                 </div>
-                <div className="text-center mb-4">
-                  <span className="text-3xl mb-2 block">{step.emoji}</span>
-                </div>
-                <h3 className="font-semibold text-crrf-ink text-center mb-3">{step.title}</h3>
-                <p className="text-sm text-crrf-muted text-center leading-relaxed">
-                  {step.description}
-                </p>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         <div className="text-center mt-10">

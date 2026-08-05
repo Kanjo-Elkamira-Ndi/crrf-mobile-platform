@@ -34,7 +34,7 @@ export default function HeroSection() {
             >
               From Waste to Worth.
               <br />
-              <span className="text-crrf-gold">From Harvest to Hope.</span>
+              {/* <span className="text-crrf-gold">From Harvest to Hope.</span> */}
             </motion.h1>
 
             <motion.p
