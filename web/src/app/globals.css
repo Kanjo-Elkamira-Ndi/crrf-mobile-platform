@@ -1,0 +1,65 @@
+@import "tailwindcss";
+
+:root {
+  --crrf-forest:       #1B6B3A;
+  --crrf-green-mid:    #2E8B57;
+  --crrf-green-light:  #D6F0E0;
+  --crrf-green-faint:  #EEF8F2;
+  --crrf-brown:        #6D4C41;
+  --crrf-brown-light:  #F5EDE9;
+  --crrf-gold:         #F59E0B;
+  --crrf-gold-light:   #FEF3C7;
+  --crrf-ink:          #111827;
+  --crrf-muted:         #4B5563;
+  --crrf-subtle:        #9CA3AF;
+  --crrf-border:        #E5E7EB;
+  --crrf-white:         #FFFFFF;
+  --crrf-bg:            #F7F9F7;
+}
+
+@theme inline {
+  /* Color tokens */
+  --color-crrf-forest:     var(--crrf-forest);
+  --color-crrf-green-mid:  var(--crrf-green-mid);
+  --color-crrf-green-light:var(--crrf-green-light);
+  --color-crrf-green-faint:var(--crrf-green-faint);
+  --color-crrf-brown:      var(--crrf-brown);
+  --color-crrf-brown-light:var(--crrf-brown-light);
+  --color-crrf-gold:       var(--crrf-gold);
+  --color-crrf-gold-light: var(--crrf-gold-light);
+  --color-crrf-ink:        var(--crrf-ink);
+  --color-crrf-muted:      var(--crrf-muted);
+  --color-crrf-subtle:     var(--crrf-subtle);
+  --color-crrf-border:     var(--crrf-border);
+  --color-crrf-white:      var(--crrf-white);
+  --color-crrf-bg:         var(--crrf-bg);
+
+  /* Font families */
+  --font-display: "Playfair Display", serif;
+  --font-sans: "DM Sans", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  /* Border radius */
+  --radius-badge: 4px;
+  --radius-card:  12px;
+  --radius-hero:  24px;
+  --radius-pill:  9999px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--crrf-bg);
+  color: var(--crrf-ink);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom selection color */
+::selection {
+  background: var(--crrf-forest);
+  color: var(--crrf-white);
+}
