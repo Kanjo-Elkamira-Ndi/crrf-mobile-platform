@@ -80,8 +80,9 @@ export default function ForFarmersPage() {
   return (
     <>
       {/* Hero */}
-      <section className="bg-gradient-to-br from-crrf-brown to-[#4A3530] text-white py-20">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="relative min-h-[50vh] bg-cover bg-center text-white py-20" style={{ backgroundImage: 'url(/hero_2.png)' }}>
+        <div className="absolute inset-0 bg-crrf-brown/60" />
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="font-display text-4xl sm:text-5xl font-bold mb-4">
             Better manure. Lower cost. Delivered to your farm.
           </h1>
