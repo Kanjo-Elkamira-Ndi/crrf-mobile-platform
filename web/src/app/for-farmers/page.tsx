@@ -126,7 +126,41 @@ export default function ForFarmersPage() {
         </div>
       </section>
 
-      {/* Product preview grid */}
+             {/* Screenshots section with phone mockups */}
+       <section className="bg-crrf-green-faint py-16">
+         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+           <div className="text-center mb-12">
+             <span className="text-crrf-gold font-semibold text-sm uppercase tracking-wider">
+               The App
+             </span>
+             <h2 className="font-display text-3xl sm:text-4xl font-bold text-crrf-forest mt-2">
+               Designed for everyday use
+             </h2>
+           </div>
+
+           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
+             {[
+               { src: '/img_1.jpg', label: 'Category Selection' },
+               { src: '/img_3.jpg', label: 'Farmer Dashboard' },
+             ].map((screen) => (
+               <div key={screen.label} className="text-center">
+                 <div className="bg-crrf-white rounded-[24px] border-4 border-crrf-forest overflow-hidden aspect-[9/19] mx-auto max-w-[200px]">
+                   <img
+                     src={screen.src}
+                     alt={screen.label}
+                     className="w-full h-full object-cover"
+                   />
+                 </div>
+                 <span className="text-xs font-medium text-crrf-muted mt-2 block">
+                   {screen.label}
+                 </span>
+               </div>
+             ))}
+           </div>
+         </div>
+       </section>
+
+       {/* Product preview grid */}
       <section className="bg-crrf-green-faint py-16">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">

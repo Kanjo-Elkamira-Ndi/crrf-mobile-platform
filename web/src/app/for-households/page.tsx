@@ -128,18 +128,22 @@ export default function ForHouseholdsPage() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
             {[
-              { emoji: '🏠', label: 'Dashboard' },
-              { emoji: '📅', label: 'Schedule' },
-              { emoji: '👛', label: 'Wallet' },
-              { emoji: '📊', label: 'Impact' },
+              { src: '/img_1.jpg', label: 'Category Selection' },
+              { src: '/img_2.jpg', label: 'Household Dashboard' },
             ].map((screen) => (
               <div key={screen.label} className="text-center">
-                <div className="bg-crrf-white rounded-[24px] border-4 border-crrf-forest p-6 aspect-[9/19] flex flex-col items-center justify-center mx-auto max-w-[160px]">
-                  <span className="text-5xl mb-3">{screen.emoji}</span>
-                  <span className="text-xs font-medium text-crrf-muted">{screen.label}</span>
+                <div className="bg-crrf-white rounded-[24px] border-4 border-crrf-forest overflow-hidden aspect-[9/19] mx-auto max-w-[200px]">
+                  <img
+                    src={screen.src}
+                    alt={screen.label}
+                    className="w-full h-full object-cover"
+                  />
                 </div>
+                <span className="text-xs font-medium text-crrf-muted mt-2 block">
+                  {screen.label}
+                </span>
               </div>
             ))}
           </div>
