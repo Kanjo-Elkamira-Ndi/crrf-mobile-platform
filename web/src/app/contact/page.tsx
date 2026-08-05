@@ -179,7 +179,7 @@ export default function ContactPage() {
 
                 {/* WhatsApp CTA */}
                 <a
-                  href="https://wa.me/237600000000"
+                  href="https://wa.me/237651816622"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-4 bg-[#25D366] text-white rounded-[12px] p-5 hover:scale-[1.02] transition-transform"
@@ -210,7 +210,7 @@ export default function ContactPage() {
                 </div>
                 <div className="flex items-start gap-3">
                   <Phone className="h-5 w-5 text-crrf-forest mt-0.5 flex-shrink-0" />
-                  <p className="text-sm text-crrf-ink">+237 6XX XXX XXX</p>
+                  <p className="text-sm text-crrf-ink">+237 651 816 622</p>
                 </div>
               </div>
 

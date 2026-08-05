@@ -142,7 +142,7 @@ export default function AboutPage() {
       </section>
 
       {/* Team */}
-      <section className="py-16" style={{ background: '#F5EDE9' }}>
+      {/* <section className="py-16" style={{ background: '#F5EDE9' }}>
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <span className="text-crrf-gold font-semibold text-sm uppercase tracking-wider">
@@ -166,7 +166,7 @@ export default function AboutPage() {
             </p>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Values */}
       <section className="bg-white py-16">
