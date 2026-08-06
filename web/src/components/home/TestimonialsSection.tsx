@@ -1,7 +1,7 @@
 const testimonials = [
   {
     quote:
-      "Before CRRF, I burned my waste behind the house. Now I sort it, schedule a pickup, and watch my credits grow. My neighbourhood is cleaner and I'm getting something back.",
+      "I can't wait for the app — soon I'll be able to sort my waste, schedule pickups easily, and watch my credits grow. Our neighbourhood will be cleaner and we'll all benefit.",
     name: 'Ama Mbarga',
     meta: '34, Yaounde',
     role: 'Household',
@@ -9,7 +9,7 @@ const testimonials = [
   },
   {
     quote:
-      'Chemical fertiliser is too expensive and not always available. CRRF manure is affordable, delivered, and my maize yield improved this season.',
+      'I am excited for the app — CRRF manure will be easy to order, affordable and delivered, and I expect my maize yields to improve once I start using it regularly.',
     name: 'Emmanuel Nkodo',
     meta: '52, Obala',
     role: 'Farmer',
@@ -17,7 +17,7 @@ const testimonials = [
   },
   {
     quote:
-      'My route is on the app. I confirm pickups, enter the weights, and the credits go to the household automatically. No paperwork.',
+      'With the app coming, my route will be on my phone — I will confirm pickups, enter weights quickly, and credits will go to households automatically. No paperwork and much less hassle.',
     name: 'Didier Tchoumba',
     meta: '28, CRRF Driver',
     role: 'Driver',

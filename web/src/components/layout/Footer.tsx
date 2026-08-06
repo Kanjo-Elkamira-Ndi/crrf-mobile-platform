@@ -129,11 +129,11 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-crrf-green-mid/20 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center">
           <p className="text-sm opacity-70">
-            © 2026 Cam Recycle Roads & Farms / DigiMark Consulting · Built in Cameroon 🇨🇲
+            © 2026 Cam Recycle Roads & Farms / Alchemy Codes  · Built in Cameroon 🇨🇲
           </p>
           <div className="flex items-center space-x-4 mt-4 sm:mt-0">
             <a
-              href="https://github.com/DigiMarkConsulting"
+              href="http://github.com/Kanjo-Elkamira-Ndi/"
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 text-crrf-white/60 hover:text-white transition-colors"
@@ -144,7 +144,7 @@ export default function Footer() {
               </svg>
             </a>
             <a
-              href="https://linkedin.com/company/digimarkconsulting"
+              href="https://www.linkedin.com/in/kanjo-elkamira-ndi-a767b7229"
               target="_blank"
               rel="noopener noreferrer"
               className="p-2 text-crrf-white/60 hover:text-white transition-colors"

@@ -63,7 +63,7 @@ export default function Navbar() {
             <button
               type="button"
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden p-2 text-crrf-ink hover:text-crrf-forest focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crrf-forest rounded-md"
+              className="md:hidden justify-self-end p-2 text-crrf-ink hover:text-crrf-forest focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crrf-forest rounded-md"
               aria-label={isOpen ? 'Close menu' : 'Open menu'}
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
