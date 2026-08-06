@@ -129,7 +129,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-crrf-green-mid/20 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center">
           <p className="text-sm opacity-70">
-            © 2026 Cam Recycle Roads & Farms / Alchemy Codes  · Built in Cameroon 🇨🇲
+            © 2026 Cam Recycle Roads & Farms. Alll Rights Reserved/ Built by Kanjo Elkamira Ndi . 🇨🇲
           </p>
           <div className="flex items-center space-x-4 mt-4 sm:mt-0">
             <a
