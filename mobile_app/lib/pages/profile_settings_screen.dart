@@ -229,7 +229,10 @@ class ProfileSettingsScreen extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: OutlinedButton.icon(
-                onPressed: () {},
+                onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
+                  AppRoutes.roleSelection,
+                  (route) => false,
+                ),
                 icon: const Icon(
                   Icons.logout_rounded,
                   color: AppColors.errorRed,

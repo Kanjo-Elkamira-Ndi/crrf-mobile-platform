@@ -52,7 +52,64 @@ class _SchedulePickupScreenState extends State<SchedulePickupScreen> {
     await Future.delayed(const Duration(seconds: 1));
     if (!mounted) return;
     setState(() => _isLoading = false);
+    await _showSuccessDialog();
+    if (!mounted) return;
     Navigator.of(context).pushReplacementNamed(AppRoutes.pickupConfirmation);
+  }
+
+  Future<void> _showSuccessDialog() {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (dialogContext) => Dialog(
+        backgroundColor: AppColors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppConstants.radiusL),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(AppConstants.spacingL),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 76,
+                height: 76,
+                decoration: const BoxDecoration(
+                  color: AppColors.greenLighter,
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(
+                  Icons.check_circle_rounded,
+                  color: AppColors.forestGreen,
+                  size: 46,
+                ),
+              ),
+              const SizedBox(height: AppConstants.spacingM),
+              Text(
+                'Schedule Successfully Submitted!',
+                textAlign: TextAlign.center,
+                style: AppTextStyles.h3.copyWith(color: AppColors.textPrimary),
+              ),
+              const SizedBox(height: AppConstants.spacingS),
+              Text(
+                'Your pickup request has been received. '
+                'We will confirm your pickup shortly.',
+                textAlign: TextAlign.center,
+                style: AppTextStyles.body.copyWith(
+                  color: AppColors.textSecondary,
+                ),
+              ),
+              const SizedBox(height: AppConstants.spacingL),
+              CrrfPrimaryButton(
+                label: 'View Pickup Details',
+                onPressed: () => Navigator.of(dialogContext).pop(),
+                leadingIcon: Icons.event_available_rounded,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -74,7 +131,6 @@ class _SchedulePickupScreenState extends State<SchedulePickupScreen> {
   Widget build(BuildContext context) {
     return CrrfScaffold(
       currentTab: CrrfNavTab.schedule,
-      persistentFooter: _buildBottomBar(),
       body: ListView(
         padding: const EdgeInsets.symmetric(vertical: AppConstants.spacingM),
         children: [
@@ -205,20 +261,15 @@ class _SchedulePickupScreenState extends State<SchedulePickupScreen> {
           _StepLabel(number: '5', label: 'Notes for driver (optional)'),
           const SizedBox(height: AppConstants.spacingS),
           CrrfTextField(label: 'e.g. Gate code, call before arrival', controller: _notesController, maxLines: 3, prefixIcon: const Icon(Icons.notes_rounded)),
+          const SizedBox(height: AppConstants.spacingL),
+          CrrfPrimaryButton(
+            label: _canSubmit ? 'Schedule Pickup' : 'Select time & waste type',
+            onPressed: _canSubmit ? _submit : null,
+            isLoading: _isLoading,
+            leadingIcon: Icons.calendar_month_rounded,
+          ),
+          const SizedBox(height: AppConstants.spacingXL),
         ],
-      ),
-    );
-  }
-
-  Widget _buildBottomBar() {
-    return Container(
-      padding: const EdgeInsets.fromLTRB(AppConstants.spacingL, AppConstants.spacingM, AppConstants.spacingL, AppConstants.spacingXL),
-      decoration: BoxDecoration(color: AppColors.white, boxShadow: const [BoxShadow(color: AppColors.shadow, blurRadius: 12, offset: Offset(0, -4))]),
-      child: CrrfPrimaryButton(
-        label: _canSubmit ? 'Confirm Pickup Request' : 'Select time & waste type',
-        onPressed: _canSubmit ? _submit : null,
-        isLoading: _isLoading,
-        leadingIcon: Icons.check_circle_outline_rounded,
       ),
     );
   }

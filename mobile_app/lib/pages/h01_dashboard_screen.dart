@@ -53,8 +53,8 @@ class _HouseholdDashboardScreenState extends State<HouseholdDashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.background,
+    return CrrfScaffold(
+      currentTab: CrrfNavTab.home,
       body: CustomScrollView(
         slivers: [
           // ── App Bar ─────────────────────────────────────────

@@ -221,6 +221,17 @@ class MyApp extends StatelessWidget {
       case AppRoutes.microLoanInfo:
         return MaterialPageRoute(builder: (_) => const MicroLoanInfoScreen());
 
+      case AppRoutes.farmerOrders:
+        return MaterialPageRoute(builder: (_) => const OrderHistoryScreen());
+
+      case AppRoutes.requestManure:
+        return MaterialPageRoute(
+          builder: (_) => const MarketplaceCatalogScreen(),
+        );
+
+      case AppRoutes.farmerInsights:
+        return MaterialPageRoute(builder: (_) => const MicroLoanInfoScreen());
+
       // ─── Driver Routes (D-01 to D-07) ─────────────────────────
       case AppRoutes.driverHome:
         return MaterialPageRoute(
