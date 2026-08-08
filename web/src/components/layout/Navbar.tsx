@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { APP_DOWNLOAD_URL } from '@/lib/download';
 
 const navLinks = [
   { href: '/how-it-works', label: 'How It Works' },
@@ -52,12 +53,12 @@ export default function Navbar() {
             </div>
 
             <div className="hidden md:flex justify-self-end">
-              <Link
-                href="/contact"
+              <a
+                href={APP_DOWNLOAD_URL}
                 className="rounded-full bg-crrf-forest px-5 py-2 text-sm font-medium text-white hover:bg-crrf-green-mid transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-crrf-forest"
               >
                 Download App
-              </Link>
+              </a>
             </div>
 
             <button
@@ -99,13 +100,13 @@ export default function Navbar() {
                 );
               })}
               <div className="px-4 pt-4 border-t border-crrf-border">
-                <Link
-                  href="/contact"
+                <a
+                  href={APP_DOWNLOAD_URL}
                   onClick={() => setIsOpen(false)}
                   className="block w-full text-center bg-crrf-forest text-white py-3 rounded-full font-medium hover:bg-crrf-green-mid transition-colors"
                 >
                   Download App
-                </Link>
+                </a>
               </div>
             </div>
           </div>

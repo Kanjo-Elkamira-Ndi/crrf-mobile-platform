@@ -1,0 +1,87 @@
+name: Build & Release Android APK
+
+on:
+  # Manual "Run workflow" button in the Actions tab — handy for quick builds
+  # without creating a git tag. These produce a pre-release (never "latest"),
+  # so the website always serves the newest stable tagged release.
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release tag for this build (e.g. nightly, v1.1.0)'
+        required: false
+        default: 'nightly'
+  # Automatic release every time a version tag like v1.2.0 is pushed:
+  #   git tag v1.2.0 && git push origin v1.2.0
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-and-release:
+    name: Build APK and publish release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Accept Android licenses
+        run: yes | flutter doctor --android-licenses
+
+      - name: Install dependencies
+        working-directory: mobile_app
+        run: flutter pub get
+
+      - name: Build release APK
+        working-directory: mobile_app
+        run: flutter build apk --release
+
+      - name: Prepare artifact
+        run: |
+          mv mobile_app/build/app/outputs/flutter-apk/app-release.apk crrfapp.apk
+          ls -lh crrfapp.apk
+
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="${{ github.event_name == 'push' && github.ref_name || inputs.version }}"
+          TARGET="${{ github.sha }}"
+
+          ARGS=(--repo "${{ github.repository }}" --title "CRRF App $TAG" --generate-notes --target "$TARGET")
+          if [ "${{ github.event_name }}" != "push" ]; then
+            # Manual builds are pre-releases so they never take over the
+            # "latest" download link used by the website.
+            ARGS+=(--prerelease)
+          fi
+
+          # Create the release (fails quietly if it already exists), then
+          # (re)upload the APK with --clobber so re-runs update the asset.
+          gh release create "$TAG" "${ARGS[@]}" || true
+
+          # Retry the upload — a just-created tag/release may briefly not be
+          # visible to the API (eventual consistency).
+          for i in 1 2 3 4 5; do
+            if gh release upload "$TAG" crrfapp.apk --repo "${{ github.repository }}" --clobber; then
+              echo "APK uploaded to release $TAG"
+              exit 0
+            fi
+            echo "Upload attempt $i failed, retrying..."
+            sleep 5
+          done
+          echo "Failed to upload APK after 5 attempts"
+          exit 1

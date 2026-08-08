@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Smartphone } from 'lucide-react';
+import { APP_DOWNLOAD_URL } from '@/lib/download';
 
 export default function DownloadCTA() {
   const [email, setEmail] = useState('');
@@ -16,7 +17,10 @@ export default function DownloadCTA() {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-br from-crrf-forest to-crrf-green-mid text-white relative overflow-hidden">
+    <section
+      id="download"
+      className="py-20 bg-gradient-to-br from-crrf-forest to-crrf-green-mid text-white relative overflow-hidden"
+    >
       {/* Decorative circles */}
       <div className="absolute top-0 right-0 w-64 h-64 rounded-full bg-white/5 -translate-y-1/2 translate-x-1/2" />
       <div className="absolute bottom-0 left-0 w-48 h-48 rounded-full bg-crrf-gold/10 translate-y-1/2 -translate-x-1/2" />
@@ -37,7 +41,7 @@ export default function DownloadCTA() {
 
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
           <a
-            href="#"
+            href={APP_DOWNLOAD_URL}
             className="inline-flex items-center justify-center rounded-full bg-crrf-gold text-crrf-forest font-semibold px-8 py-4 hover:scale-105 transition-transform shadow-lg"
           >
             Get the Android App
