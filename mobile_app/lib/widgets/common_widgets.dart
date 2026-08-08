@@ -832,6 +832,15 @@ class CrrfScaffold extends StatelessWidget {
 
   void _handleTap(BuildContext context, CrrfNavTab tab) {
     if (tab == currentTab) return; // already here — no-op
+    if (tab == CrrfNavTab.profile) {
+      // Pass the dashboard route so the profile back arrow can return to it
+      // instead of popping an empty stack (which renders a blank screen).
+      Navigator.of(context).pushReplacementNamed(
+        AppRoutes.profile,
+        arguments: {AppConstants.argHomeRoute: AppRoutes.householdHome},
+      );
+      return;
+    }
     Navigator.of(context).pushReplacementNamed(_routeFor(tab));
   }
 
@@ -1043,6 +1052,15 @@ class DriverScaffold extends StatelessWidget {
 
   void _handleTap(BuildContext context, DriverNavTab tab) {
     if (tab == currentTab) return;
+    if (tab == DriverNavTab.profile) {
+      // Pass the dashboard route so the profile back arrow can return to it
+      // instead of popping an empty stack (which renders a blank screen).
+      Navigator.of(context).pushReplacementNamed(
+        AppRoutes.profile,
+        arguments: {AppConstants.argHomeRoute: AppRoutes.driverHome},
+      );
+      return;
+    }
     Navigator.of(context).pushReplacementNamed(_routeFor(tab));
   }
 
@@ -1305,6 +1323,15 @@ class FarmerScaffold extends StatelessWidget {
 
   void _handleTap(BuildContext context, FarmerNavTab tab) {
     if (tab == currentTab) return;
+    if (tab == FarmerNavTab.profile) {
+      // Pass the dashboard route so the profile back arrow can return to it
+      // instead of popping an empty stack (which renders a blank screen).
+      Navigator.of(context).pushReplacementNamed(
+        AppRoutes.profile,
+        arguments: {AppConstants.argHomeRoute: AppRoutes.farmerHome},
+      );
+      return;
+    }
     Navigator.of(context).pushReplacementNamed(_routeFor(tab));
   }
 

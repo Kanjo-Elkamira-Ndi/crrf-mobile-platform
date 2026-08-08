@@ -66,6 +66,11 @@ abstract class AppConstants {
   static const String keyOnboardingDone = 'onboarding_done';
   static const String keyLanguage = 'app_language';
 
+  // ─── Route Arguments ─────────────────────────────────────
+  /// Key for the route argument that tells the shared [AppRoutes.profile]
+  /// screen which dashboard it should return to via its back arrow.
+  static const String argHomeRoute = 'homeRoute';
+
   // ─── Supported Locales ───────────────────────────────────
   static const List<String> supportedLocales = ['en', 'fr'];
 
@@ -203,6 +208,20 @@ extension UserRoleExtension on UserRole {
         return UserRole.admin;
       default:
         return UserRole.household;
+    }
+  }
+
+  /// The landing route shown after authentication for this role.
+  String get homeRoute {
+    switch (this) {
+      case UserRole.household:
+        return AppRoutes.householdHome;
+      case UserRole.farmer:
+        return AppRoutes.farmerHome;
+      case UserRole.driver:
+        return AppRoutes.driverHome;
+      case UserRole.admin:
+        return AppRoutes.adminHome;
     }
   }
 }

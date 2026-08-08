@@ -6,6 +6,26 @@ import '../../core/constants/app_constants.dart';
 class ProfileSettingsScreen extends StatelessWidget {
   const ProfileSettingsScreen({super.key});
 
+  /// Returns to the caller's dashboard. The Profile tab is reached via
+  /// [Navigator.pushReplacementNamed], so the dashboard is not on the stack —
+  /// popping would leave the navigator empty and render a blank screen.
+  void _goBack(BuildContext context) {
+    final args = ModalRoute.of(context)?.settings.arguments;
+    final homeRoute = args is Map &&
+            args.containsKey(AppConstants.argHomeRoute)
+        ? args[AppConstants.argHomeRoute] as String
+        : null;
+
+    if (homeRoute != null) {
+      Navigator.of(context).pushNamedAndRemoveUntil(
+        homeRoute,
+        (route) => false,
+      );
+    } else {
+      Navigator.of(context).pop();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +39,7 @@ class ProfileSettingsScreen extends StatelessWidget {
             Icons.arrow_back_ios_rounded,
             color: AppColors.textPrimary,
           ),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => _goBack(context),
         ),
         title: Text(
           'Profile Settings',
